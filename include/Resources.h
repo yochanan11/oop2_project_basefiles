@@ -2,12 +2,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-const size_t OBJECTS = 2;
+const size_t OBJECTS = 3;
 const size_t SOUND_BUFFER = 0;
 
 enum class ObjIndex
 {
-	BACKGROUND,F_PLAYER
+	BACKGROUND,F_PLAYER,MENU
 };
 enum class SoundIndex
 {
@@ -32,7 +32,7 @@ private:
 
 	std::string m_textures_name[OBJECTS] =
 	{
-		"background.png","Fish_player.png"
+		"background.png","Fish_player.png","Menu.png"
 	};
 	sf::Texture m_objects_texture[OBJECTS];
 	//std::string m_font_name = "ARIAL.TTF", //m_music_name = "MUSIC.wav";
