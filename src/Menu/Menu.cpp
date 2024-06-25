@@ -1,6 +1,6 @@
 #include "Menu.h"
 //--------------------------
-Menu::Menu(){}
+Menu::Menu():m_bac(Resources::instance().getTexture(ObjIndex::MENU)){}
 //---------------------------
 void Menu::add(std::string name, std::unique_ptr<Command> c)
 {

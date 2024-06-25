@@ -14,6 +14,7 @@ public:
     ~Menu();
 
 private:
+    sf::Sprite m_bac;
     typedef std::pair<std::string, std::unique_ptr<Command>> m_option;
     std::vector<m_option> m_options;
     //---------------------------
