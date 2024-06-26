@@ -1,4 +1,5 @@
 #include "Controller.h"
+#include <Level/Level1.h>
 //--------------------------
 Controller::Controller()
 {
@@ -12,23 +13,7 @@ Controller::~Controller()
 void Controller::run()
 {
     m_menu.drawMenu();
-	sf::RenderWindow window(sf::VideoMode(1400, 900), "Fish Eat Fishes");
-	m_window = &window;
-    while (m_window->isOpen())
-    {
-        const auto deltaTime = m_game_clock.restart();
-        sf::Event event;
-        while (m_window->pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                m_window->close();
-        }
-        m_player.move(deltaTime);
-        m_window->clear();
-        m_window->draw(m_bac);
-        //m_window->draw(m_f);
-        m_player.draw(window);
-        m_window->display();
-    }
+    m_level.add("Level1", std::make_unique<Level1>(m_player));
+    m_level.activate();
 }
 

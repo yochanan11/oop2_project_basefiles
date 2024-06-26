@@ -8,10 +8,11 @@ class Object
 public:
 	Object();
 	virtual ~Object();
-
 protected:
 	sf::Sprite getSprite();
 	sf::Sprite m_sprite;
+	virtual void setPosition(sf::RenderWindow&) = 0;
+
 private:
 	//sf::Sprite m_sprite;
 	virtual void draw(sf::RenderWindow&)  = 0;

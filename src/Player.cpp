@@ -2,7 +2,13 @@
 //--------------------------------
 Player::Player(){ 
 	m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::F_PLAYER));
-	m_sprite.setPosition(sf::Vector2f(100.f, 100.f));
+    m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2.f,
+        m_sprite.getTexture()->getSize().y / 2.f);
+}
+//--------------------------------
+Player::Player(sf::RenderWindow& window) {
+    m_sprite.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
+    Player();
 }
 //--------------------------------
 Player::~Player(){}
@@ -56,5 +62,10 @@ void Player::move(sf::Time deltaTime)
         }
         
     }
+}
+//-------------------
+void Player::setPosition(sf::RenderWindow& window)
+{
+    m_sprite.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
 }
 //-------------------
