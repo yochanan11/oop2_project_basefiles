@@ -13,7 +13,7 @@ Level1::~Level1()
 //---------------------------------
 void Level1::run()
 {
-    sf::RenderWindow window(sf::VideoMode(1400, 900), "Fish Eat Fishes");
+    sf::RenderWindow window(sf::VideoMode(1400, 900), "Fish Eats Fish");
     m_window = &window;
 	FishEaten fish;
     fish.setPosition(*m_window);
