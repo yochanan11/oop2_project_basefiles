@@ -34,5 +34,27 @@ void Player::move(sf::Time deltaTime)
 {
     m_position_before = m_sprite.getPosition();
     m_sprite.move(dirFromKey() * SPEED * deltaTime.asSeconds());
+    if(dirFromKey().x > 0)
+    {
+        if(m_scale)
+        {
+            m_sprite.setScale(1.f, 1.f);
+            m_scale = false;
+        }
+        /*if (m_open)
+            m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::F_PLAYER));
+        else
+            m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::F_PLAYER1));
+        m_open = !m_open;*/
+    }
+    else if(dirFromKey().x < 0)
+    {
+        if(!m_scale)
+        {
+            m_sprite.setScale(-1.f, 1.f);
+            m_scale = true;
+        }
+        
+    }
 }
 //-------------------

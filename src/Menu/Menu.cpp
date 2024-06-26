@@ -14,7 +14,24 @@ void Menu::activate() {
         n = getOptionFromUser();
     } while (performAction(n));
 }
-
+//-----------------------------
+void Menu::drawMenu()
+{
+    auto window = sf::RenderWindow(sf::VideoMode(989, 950), "Menu");
+    m_window = &window;
+    while (m_window->isOpen())
+    {
+        sf::Event event;
+        while (m_window->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                m_window->close();
+        }
+        m_window->clear();
+        m_window->draw(m_bac);
+        m_window->display();
+    }
+}
 //---------------------------
 Menu::~Menu(){}
 //---------------------------

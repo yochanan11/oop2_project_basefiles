@@ -11,6 +11,7 @@ Controller::~Controller()
 //--------------------------
 void Controller::run()
 {
+    m_menu.drawMenu();
 	sf::RenderWindow window(sf::VideoMode(1400, 900), "Fish Eat Fishes");
 	m_window = &window;
     while (m_window->isOpen())

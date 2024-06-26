@@ -11,5 +11,6 @@ public:
 
 private:
 	sf::Vector2f m_position_before;
+	bool m_open = false,m_scale = false;
 };
 
