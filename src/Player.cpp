@@ -36,7 +36,7 @@ namespace
     }
 }
 //-------------------
-void Player::move(sf::Time deltaTime)
+void Player::move(sf::Time deltaTime,sf::RenderWindow& window)
 {
     m_position_before = m_sprite.getPosition();
     m_sprite.move(dirFromKey() * SPEED * deltaTime.asSeconds());

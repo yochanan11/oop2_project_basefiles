@@ -28,9 +28,9 @@ void Level1::run()
             if (event.type == sf::Event::Closed)
                 m_window->close();
         }
-        m_player->move(deltaTime);
+        m_player->move(deltaTime,*m_window);
         for (auto& it : m_fish_eaten)
-            it.move(deltaTime);
+            it.move(deltaTime, *m_window);
         m_window->clear();
         m_window->draw(m_bec_level);
         for (auto it: m_fish_eaten)

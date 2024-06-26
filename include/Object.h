@@ -12,9 +12,9 @@ protected:
 	sf::Sprite getSprite();
 	sf::Sprite m_sprite;
 	virtual void setPosition(sf::RenderWindow&) = 0;
-
+	virtual void draw(sf::RenderWindow&) = 0;
+	virtual void move(sf::Time, sf::RenderWindow&) = 0;
 private:
 	//sf::Sprite m_sprite;
-	virtual void draw(sf::RenderWindow&)  = 0;
-	virtual void move(sf::Time deltaTime)  = 0;
+	
 };
