@@ -8,6 +8,8 @@ public:
 	Level1(Player&);
 	~Level1();
 	void run() override;
+	void handleCollisions(GameObject& );
+
 
 private:
 

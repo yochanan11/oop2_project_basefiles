@@ -1,7 +1,7 @@
 #pragma once
-#include "Object.h"
+#include "GameObject.h"
 
-class Gift : virtual public Object
+class Gift : virtual public GameObject
 {
 public:
 	Gift();

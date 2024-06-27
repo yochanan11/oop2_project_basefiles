@@ -1,2 +1,2 @@
-const float SPEED = 110.f;
+const float SPEED = 130.f;
 

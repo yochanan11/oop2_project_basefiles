@@ -15,7 +15,7 @@ protected:
     sf::Sprite m_bec_level;
     sf::RenderWindow* m_window = nullptr;
     Player* m_player = nullptr;
-    std::vector<FishEaten> m_fish_eaten;
+    std::vector<std::unique_ptr<GameObject>> m_fish_eaten;
     sf::Clock m_game_clock;
 };
 

@@ -22,7 +22,21 @@ void FishEaten::move(sf::Time deltaTime, sf::RenderWindow& window)
 		m_sprite.setPosition(window.getSize().x, m_sprite.getPosition().y);
 }
 //--------------------------------------
-void FishEaten::setPosition(sf::RenderWindow& window) 
+void FishEaten::setPosition(const int window_x, const int window_y)
 {
-	m_sprite.setPosition(sf::Vector2f(window.getSize().x, window.getSize().y / 4.f));
+	m_sprite.setPosition(sf::Vector2f(window_x, window_y/4.f));
 }
+//--------------------------------------
+void FishEaten::handleCollision(GameObject& gameObject){ gameObject.handleCollision(*this); }
+//----------------------------------------
+void FishEaten::handleCollision(Player& gameObject)
+{
+	if (!m_eaten)
+		gameObject.handleCollision(*this);
+	m_eaten = true;
+}
+//----------------------------------------
+void FishEaten::handleCollision(FishEaten& gameObject)
+{
+}
+//--------------------------------------

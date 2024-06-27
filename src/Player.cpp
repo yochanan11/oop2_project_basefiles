@@ -36,6 +36,17 @@ namespace
     }
 }
 //-------------------
+void Player::handleCollision(GameObject& gameObject) { gameObject.handleCollision(*this); }
+//-------------------
+void Player::handleCollision(Player& gameObject)
+{
+    
+}
+//------------------
+void Player::handleCollision(FishEaten& gameObject)
+{
+}
+//-------------------
 void Player::move(sf::Time deltaTime,sf::RenderWindow& window)
 {
     m_position_before = m_sprite.getPosition();
@@ -64,8 +75,8 @@ void Player::move(sf::Time deltaTime,sf::RenderWindow& window)
     }
 }
 //-------------------
-void Player::setPosition(sf::RenderWindow& window)
+void Player::setPosition(const int window_x, const int window_y)
 {
-    m_sprite.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
+    m_sprite.setPosition(window_x / 2.f, window_y / 2.f);
 }
 //-------------------
