@@ -1,6 +1,6 @@
 #include "FishEaten.h"
 //-----------------------------------
-FishEaten::FishEaten()
+FishEaten::FishEaten():Fish(2)
 {
 	m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::FISH_E1));
 	m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2.f,

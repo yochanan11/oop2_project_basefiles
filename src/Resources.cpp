@@ -9,10 +9,9 @@ Resources::Resources()
 	for (auto i = size_t(0); i < OBJECTS; ++i)
 		m_objects_texture[i].loadFromFile(m_textures_name[i]);
 	/*for (auto i = size_t(0); i < SOUND_BUFFER; ++i)
-		m_sound_buffer[i].loadFromFile(m_soundBuffer_name[i]);
-
+		m_sound_buffer[i].loadFromFile(m_soundBuffer_name[i]);*/
 	m_font.loadFromFile(m_font_name);
-	m_music.openFromFile(m_music_name);*/
+	/*m_music.openFromFile(m_music_name); */
 }
 
 //--------------------------------------

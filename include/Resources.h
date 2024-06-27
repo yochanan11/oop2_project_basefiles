@@ -36,7 +36,7 @@ private:
 		"Fish_player_sprite.png"
 	};
 	sf::Texture m_objects_texture[OBJECTS];
-	//std::string m_font_name = "ARIAL.TTF", //m_music_name = "MUSIC.wav";
+	std::string m_font_name = "BubblegumSans-Regular.ttf"; //m_music_name = "MUSIC.wav";
 	//std::string	m_soundBuffer_name[SOUND_BUFFER] = {
 	//	/*"EatenAfect.wav" ,
 	//	"BoomEfect.wav",

@@ -1,12 +1,13 @@
 #include "Player.h"
+#include <iostream>
 //--------------------------------
-Player::Player(){ 
+Player::Player():Fish(0){ 
 	m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::F_PLAYER));
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2.f,
         m_sprite.getTexture()->getSize().y / 2.f);
 }
 //--------------------------------
-Player::Player(sf::RenderWindow& window) {
+Player::Player(sf::RenderWindow& window) :Fish(0) {
     m_sprite.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
     Player();
 }
@@ -45,12 +46,19 @@ void Player::handleCollision(Player& gameObject)
 //------------------
 void Player::handleCollision(FishEaten& gameObject)
 {
+   m_score+= gameObject.getScore();
+   std::cout << m_score << "\n";
 }
 //-------------------
 void Player::move(sf::Time deltaTime,sf::RenderWindow& window)
 {
     m_position_before = m_sprite.getPosition();
     m_sprite.move(dirFromKey() * SPEED * deltaTime.asSeconds());
+    if (m_sprite.getPosition().x > window.getSize().x-150 ||
+        m_sprite.getPosition().x < 150 ||
+        m_sprite.getPosition().y > window.getSize().y-100 ||
+        m_sprite.getPosition().y < 100)
+        m_sprite.setPosition(m_position_before);
     if(dirFromKey().x > 0)
     {
         if(m_scale)
@@ -58,11 +66,6 @@ void Player::move(sf::Time deltaTime,sf::RenderWindow& window)
             m_sprite.setScale(1.f, 1.f);
             m_scale = false;
         }
-        /*if (m_open)
-            m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::F_PLAYER));
-        else
-            m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::F_PLAYER1));
-        m_open = !m_open;*/
     }
     else if(dirFromKey().x < 0)
     {

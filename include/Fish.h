@@ -4,10 +4,12 @@
 class Fish:  virtual public GameObject
 {
 public:
-	Fish();
+	Fish(int);
 	~Fish();
-
+	int getScore()const;
+protected:
+	int m_score;
 private:
-
+	
 };
 

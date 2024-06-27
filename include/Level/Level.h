@@ -17,5 +17,6 @@ protected:
     Player* m_player = nullptr;
     std::vector<std::unique_ptr<GameObject>> m_fish_eaten;
     sf::Clock m_game_clock;
+    sf::Text m_text_score;
 };
 
