@@ -1,12 +1,12 @@
 #pragma once
-#include "Fish.h"
+#include "Fish/Fish.h"
 #include "Player.h"
 
 
 class FishEaten:public Fish
 {
 public:
-	FishEaten();
+	FishEaten(const int);
 	~FishEaten();
 	virtual void draw(sf::RenderWindow&) override;
 	virtual void move(sf::Time, sf::RenderWindow&) override;
@@ -17,6 +17,6 @@ public:
 	
 
 private:
-	
+	sf::Texture& getRandTex(const int);
 };
 

@@ -16,11 +16,13 @@ void Level1::run()
     sf::RenderWindow window(sf::VideoMode(1400, 900), "Fish Eats Fish");
     m_window = &window;
     m_text_score.setPosition(sf::Vector2f(50.f, 50.f));
-
-    for (size_t i = 1; i < 4; i++)
+    std::srand(std::time(0));
+    int random_number;
+    for (size_t i = 1; i < 5; i++)
     {
-        m_fish_eaten.push_back(std::make_unique<FishEaten>());
-        m_fish_eaten[i-1]->setPosition(window.getSize().x, window.getSize().y*i);
+        random_number = std::rand() % 4 + 1;
+        m_fish_eaten.push_back(std::make_unique<FishEaten>(random_number));
+        m_fish_eaten[i-1]->setPosition(window.getSize().x, window.getSize().y*(i-0.5));
     }
 	
     m_player->setPosition(window.getSize().x, window.getSize().y);
@@ -50,7 +52,6 @@ void Level1::run()
             if(!it->getIsEaten())
                 it->draw(*m_window);
         }
-        //m_window->draw(m_f);
         m_player->draw(*m_window);
         m_window->display();
     }

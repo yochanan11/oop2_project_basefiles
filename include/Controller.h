@@ -1,5 +1,5 @@
 #pragma once
-#include "Fish.h"
+#include "Fish/Fish.h"
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "Menu.h"

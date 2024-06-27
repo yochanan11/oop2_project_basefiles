@@ -1,6 +1,6 @@
 #pragma once
-#include "Fish.h"
-#include "FishEaten.h"
+#include "Fish/Fish.h"
+#include "Fish/FishEaten.h"
 
 class Player : virtual public Fish
 {

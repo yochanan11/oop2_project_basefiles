@@ -1,8 +1,8 @@
-#include "FishEaten.h"
+#include "Fish/FishEaten.h"
 //-----------------------------------
-FishEaten::FishEaten():Fish(2)
+FishEaten::FishEaten(const int rand):Fish(2)
 {
-	m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::FISH_E1));
+	m_sprite.setTexture(getRandTex(rand));
 	m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2.f,
 		m_sprite.getTexture()->getSize().y / 2.f);
 	//m_sprite.scale(-1, 0);
@@ -38,5 +38,26 @@ void FishEaten::handleCollision(Player& gameObject)
 //----------------------------------------
 void FishEaten::handleCollision(FishEaten& gameObject)
 {
+}
+//----------------------------------------
+sf::Texture& FishEaten::getRandTex(const int rand)
+{
+	switch (rand)
+	{
+	case 1:
+		return Resources::instance().getTexture(ObjIndex::FISH_E1);
+		break;
+	case 2:
+		return Resources::instance().getTexture(ObjIndex::FISH_E2);
+		break;
+	case 3:
+		return Resources::instance().getTexture(ObjIndex::FISH_E3);
+		break;
+	case 4:
+		return Resources::instance().getTexture(ObjIndex::FISH_E4);
+		break;
+	default:
+		break;
+	}
 }
 //--------------------------------------

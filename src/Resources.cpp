@@ -1,6 +1,4 @@
 #include "Resources.h"
-
-#include "Resources.h"
 #include "Macrose.h"
 #include <iostream>
 

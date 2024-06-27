@@ -2,8 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "Resources.h"
 #include "Player.h"
-#include "Fish.h"
-#include "FishEaten.h"
+#include "Fish/Fish.h"
+#include "Fish/FishEaten.h"
 
 
 class Level {

@@ -1,4 +1,4 @@
-#include "Fish.h"
+#include "Fish/Fish.h"
 
 //--------------------------------
 Fish::Fish(int score):m_score(score){

@@ -47,7 +47,6 @@ void Player::handleCollision(Player& gameObject)
 void Player::handleCollision(FishEaten& gameObject)
 {
    m_score+= gameObject.getScore();
-   std::cout << m_score << "\n";
 }
 //-------------------
 void Player::move(sf::Time deltaTime,sf::RenderWindow& window)
