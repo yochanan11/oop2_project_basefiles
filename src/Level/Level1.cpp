@@ -18,11 +18,18 @@ void Level1::run()
     m_text_score.setPosition(sf::Vector2f(50.f, 50.f));
     std::srand(std::time(0));
     int random_number;
-    for (size_t i = 1; i < 5; i++)
+    for (size_t i = 1; i < 9; i++)
     {
         random_number = std::rand() % 4 + 1;
         m_fish_eaten.push_back(std::make_unique<FishEaten>(random_number));
-        m_fish_eaten[i-1]->setPosition(window.getSize().x, window.getSize().y*(i-0.5));
+        
+        if (i > 4)
+        {
+            m_fish_eaten[i - 1]->setRotation();
+            m_fish_eaten[i - 1]->setPosition(0, window.getSize().y * (i - 4.25));
+        }
+        else
+            m_fish_eaten[i - 1]->setPosition(window.getSize().x, window.getSize().y * (i - 0.5));
     }
 	
     m_player->setPosition(window.getSize().x, window.getSize().y);
@@ -35,24 +42,29 @@ void Level1::run()
             if (event.type == sf::Event::Closed)
                 m_window->close();
         }
-        m_player->move(deltaTime,*m_window);
+        m_player->move(deltaTime,*m_window,1);
         handleCollisions(*m_player);
         //m_player->animate(deltaTime);
+        int i = 1;
         for (auto& it : m_fish_eaten)
         {
-            it->move(deltaTime, *m_window);
+            if (i > 4)
+                it->move(deltaTime, *m_window, 1);
+            else
+                it->move(deltaTime, *m_window, -1);
             handleCollisions(*it);
+            i++;
         }
         m_text_score.setString("SCORE: " + std::to_string(m_player->getScore()));
         m_window->clear();
         m_window->draw(m_bec_level);
-        m_window->draw(m_text_score);
         for (auto& it: m_fish_eaten)
         {
             if(!it->getIsEaten())
                 it->draw(*m_window);
         }
         m_player->draw(*m_window);
+        m_window->draw(m_text_score);
         m_window->display();
     }
 }

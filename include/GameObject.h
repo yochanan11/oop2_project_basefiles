@@ -13,11 +13,12 @@ public:
 	virtual ~GameObject();
 	virtual void setPosition(const int,const int) = 0;
 	virtual void draw(sf::RenderWindow&) = 0;
-	virtual void move(sf::Time, sf::RenderWindow&) = 0;
+	virtual void move(sf::Time, sf::RenderWindow&,int) = 0;
 	virtual void handleCollision(GameObject& gameObject) = 0;
 	virtual void handleCollision(Player& gameObject) = 0;
 	virtual void handleCollision(FishEaten& gameObject) = 0;
 	bool checkCollision(const GameObject&) const;
+	void setRotation();
 	bool getIsEaten();
 protected:
 	sf::Sprite getSprite();

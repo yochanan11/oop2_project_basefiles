@@ -49,7 +49,7 @@ void Player::handleCollision(FishEaten& gameObject)
    m_score+= gameObject.getScore();
 }
 //-------------------
-void Player::move(sf::Time deltaTime,sf::RenderWindow& window)
+void Player::move(sf::Time deltaTime,sf::RenderWindow& window,int side)
 {
     m_position_before = m_sprite.getPosition();
     m_sprite.move(dirFromKey() * SPEED * deltaTime.asSeconds());

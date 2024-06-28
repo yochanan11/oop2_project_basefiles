@@ -9,7 +9,7 @@ public:
 	Player(sf::RenderWindow&);
 	~Player();
 	virtual void draw(sf::RenderWindow&) override;
-	virtual void move(sf::Time, sf::RenderWindow&) override;
+	virtual void move(sf::Time, sf::RenderWindow&,int) override;
 	virtual void setPosition(const int, const int) override;
 	virtual void handleCollision(GameObject& gameObject) override;
 	virtual void handleCollision(Player& gameObject) override;

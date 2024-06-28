@@ -8,3 +8,5 @@ Fish::Fish(int score):m_score(score){
 Fish::~Fish(){}
 //--------------------------------
 int Fish::getScore() const { return m_score; }
+//--------------------------------
+//--------------------------------
