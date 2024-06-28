@@ -8,11 +8,16 @@ void Menu::add(std::string name, std::unique_ptr<Command> c)
 }
 //---------------------------
 void Menu::activate() {
-    int n;
+    /*int n;
     do {
+
         show();
         n = getOptionFromUser();
-    } while (performAction(n));
+    } while (performAction(n));*/
+    /*for (auto it: m_options)
+    {
+
+    }*/
 }
 //-----------------------------
 void Menu::drawMenu()

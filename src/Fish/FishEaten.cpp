@@ -36,6 +36,7 @@ void FishEaten::handleCollision(Player& gameObject)
 	if (!m_eaten)
 		gameObject.handleCollision(*this);
 	m_eaten = true;
+
 }
 //----------------------------------------
 void FishEaten::handleCollision(FishEaten& gameObject)

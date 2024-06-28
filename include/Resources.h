@@ -3,7 +3,7 @@
 #include <SFML/Audio.hpp>
 
 const size_t OBJECTS = 10;
-const size_t SOUND_BUFFER = 0;
+const size_t SOUND_BUFFER = 1;
 
 enum class ObjIndex
 {
@@ -12,7 +12,7 @@ enum class ObjIndex
 };
 enum class SoundIndex
 {
-	
+	EAT
 };
 
 class Resources
@@ -24,8 +24,8 @@ public:
 	}
 	sf::Texture& getTexture(ObjIndex);
 	sf::Font& getFont();
-	/*void playSound(SoundIndex);
-	sf::Music& getMusic();*/
+	void playSound(SoundIndex);
+	sf::Music& getMusic();
 
 private:
 	Resources();
@@ -38,14 +38,14 @@ private:
 		"NEW GAME B1.png"
 	};
 	sf::Texture m_objects_texture[OBJECTS];
-	std::string m_font_name = "BubblegumSans-Regular.ttf"; //m_music_name = "MUSIC.wav";
-	//std::string	m_soundBuffer_name[SOUND_BUFFER] = {
-	//	/*"EatenAfect.wav" ,
-	//	"BoomEfect.wav",
-	//	"GiftEffect.wav"*/
-	//};
+	std::string m_font_name = "BubblegumSans-Regular.ttf" ,m_music_name = "sound.wav";
+	std::string	m_soundBuffer_name[SOUND_BUFFER] = {
+		"eat.wav" /*,
+		"BoomEfect.wav",
+		"GiftEffect.wav"*/
+	};
 	sf::Font m_font;
-	//sf::SoundBuffer m_sound_buffer[SOUND_BUFFER];
-	/*sf::Music m_music;
-	sf::Sound m_sound;*/
+	sf::SoundBuffer m_sound_buffer[SOUND_BUFFER];
+	sf::Music m_music;
+	sf::Sound m_sound;
 };

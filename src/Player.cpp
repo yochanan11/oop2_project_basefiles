@@ -47,6 +47,8 @@ void Player::handleCollision(Player& gameObject)
 void Player::handleCollision(FishEaten& gameObject)
 {
    m_score+= gameObject.getScore();
+   Resources::instance().playSound(SoundIndex::EAT);
+
 }
 //-------------------
 void Player::move(sf::Time deltaTime,sf::RenderWindow& window,int side)
