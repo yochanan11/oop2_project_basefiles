@@ -21,7 +21,7 @@ void Level1::run()
     for (size_t i = 1; i < 9; i++)
     {
         random_number = std::rand() % 4 + 1;
-        m_fish_eaten.push_back(std::make_unique<FishEaten>(random_number));
+        m_fish_eaten.push_back(std::make_unique<SmallFish>(random_number));
         
         if (i > 4)
         {
@@ -31,7 +31,9 @@ void Level1::run()
         else
             m_fish_eaten[i - 1]->setPosition(window.getSize().x, window.getSize().y * (i - 0.5));
     }
-	
+    m_fish_eaten.push_back(std::make_unique<ObstacleFish>());
+    m_fish_eaten[m_fish_eaten.size() - 1]->setPosition(0, 0);
+
     m_player->setPosition(window.getSize().x, window.getSize().y);
     while (m_window->isOpen())
     {
@@ -39,7 +41,7 @@ void Level1::run()
         sf::Event event;
         while (m_window->pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed ||m_player->getGameOver())
                 m_window->close();
         }
         m_player->move(deltaTime,*m_window,1);

@@ -4,6 +4,9 @@
 #include "Player.h"
 #include "Fish/Fish.h"
 #include "Fish/FishEaten.h"
+#include "Fish/SmallFish.h"
+#include"Fish/ObstacleFish.h"
+
 
 
 class Level {

@@ -12,4 +12,5 @@ configure_file ("img/Fish/Fish_player_sprite.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("BubblegumSans-Regular.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("sound/sound.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("sound/eat.wav" ${CMAKE_BINARY_DIR} COPYONLY)
-
+configure_file ("sound/eat.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("img/Fish/ObstacleFish.png" ${CMAKE_BINARY_DIR} COPYONLY)

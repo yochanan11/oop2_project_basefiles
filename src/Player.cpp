@@ -14,10 +14,6 @@ Player::Player(sf::RenderWindow& window) :Fish(0) {
 //--------------------------------
 Player::~Player(){}
 //--------------------------------
-void Player::draw(sf::RenderWindow& m_window){
-	m_window.draw(m_sprite);
-}
-//--------------------------------
 namespace
 {
     sf::Vector2f dirFromKey()
@@ -50,11 +46,19 @@ void Player::handleCollision(FishEaten& gameObject)
    Resources::instance().playSound(SoundIndex::EAT);
 
 }
+//------------------------------------
+void Player::handleCollision(ObstacleFish& gameObject)
+{
+    Resources::instance().playSound(SoundIndex::GAME_OVER);
+    m_game_over = true;
+}
+//------------------------------------
+bool Player::getGameOver() const { return m_game_over; }
 //-------------------
 void Player::move(sf::Time deltaTime,sf::RenderWindow& window,int side)
 {
     m_position_before = m_sprite.getPosition();
-    m_sprite.move(dirFromKey() * SPEED * deltaTime.asSeconds());
+    m_sprite.move(dirFromKey() * SPEED_PLAYER * deltaTime.asSeconds());
     if (m_sprite.getPosition().x > window.getSize().x-150 ||
         m_sprite.getPosition().x < 150 ||
         m_sprite.getPosition().y > window.getSize().y-100 ||

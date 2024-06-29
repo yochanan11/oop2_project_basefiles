@@ -4,6 +4,8 @@ GameObject::GameObject(){}
 //------------------------------------------
 GameObject::~GameObject() {}
 //------------------------------------------
+void GameObject::draw(sf::RenderWindow& window) { window.draw(m_sprite); }
+//------------------------------------------
 sf::Sprite GameObject::getSprite() { return m_sprite; }
 //------------------------------------------
 void GameObject::setRotation() { m_sprite.setScale(-1, 1); }
