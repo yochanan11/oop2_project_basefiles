@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Resources.h"
 
 class Command {
 public:
     Command(sf::Texture&, const sf::Vector2f&);
+    virtual ~Command();
     virtual void execute() = 0;
+    void draw(sf::RenderWindow& window);
+    bool isClicked(const sf::Vector2f& mousePos) const; // הוספת פונקציה לבדיקת לחיצה
 protected:
     sf::Sprite m_sprite_menu;
 };
-

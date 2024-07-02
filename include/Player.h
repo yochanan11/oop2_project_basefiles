@@ -19,5 +19,7 @@ public:
 private:
 	sf::Vector2f m_position_before;
 	bool m_open = false,m_scale = false,m_game_over = false;
+	float m_initialScaleX; // scale הראשוני של התמונה
+	float m_initialScaleY; // scale הראשוני של התמונה
 };
 

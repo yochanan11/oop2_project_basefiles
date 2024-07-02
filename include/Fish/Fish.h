@@ -7,6 +7,8 @@ public:
 	Fish(int);
 	~Fish();
 	int getScore()const;
+	void setScore(const int);
+
 protected:
 	int m_score;
 private:

@@ -13,6 +13,8 @@ Level1::~Level1()
 //---------------------------------
 void Level1::run()
 {
+    m_fish_eaten.clear();
+    m_player->setScore(0);
     sf::RenderWindow window(sf::VideoMode(1400, 900), "Fish Eats Fish");
     m_window = &window;
     m_text_score.setPosition(sf::Vector2f(50.f, 50.f));
@@ -54,7 +56,7 @@ void Level1::run()
                 it->move(deltaTime, *m_window, 1);
             else
                 it->move(deltaTime, *m_window, -1);
-            handleCollisions(*it);
+ 
             i++;
         }
         m_text_score.setString("SCORE: " + std::to_string(m_player->getScore()));

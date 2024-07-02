@@ -1,10 +1,11 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <map>
 #include <string>
 #include <memory>
-#include <Command.h>
+#include <SFML/Graphics.hpp>
+#include "Command.h"
+#include "Resources.h"
 
 class Menu {
 public:
@@ -16,11 +17,12 @@ public:
 
 private:
     sf::Sprite m_bac;
-    sf::RenderWindow* m_window = nullptr;
+    std::unique_ptr<sf::RenderWindow> m_window;
     typedef std::pair<std::string, std::unique_ptr<Command>> m_option;
     std::vector<m_option> m_options;
-    //---------------------------
+
     void show();
     int getOptionFromUser();
     bool performAction(unsigned n);
+    void handleMouseClick(const sf::Vector2f& mousePos);
 };

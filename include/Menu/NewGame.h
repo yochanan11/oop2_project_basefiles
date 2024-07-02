@@ -1,14 +1,13 @@
 #pragma once
 #include "Command.h"
+#include "Controller.h"
 
-class NewGame:public Command
-{
+class NewGame : public Command {
 public:
-	NewGame();
-	~NewGame();
-	void execute() override;
+    NewGame(Controller* controller); // קבל מצביע ל-Controller
+    ~NewGame();
+    void execute() override;
+
 private:
-
+    Controller* m_controller; // שמירת מצביע ל-Controller
 };
-
-

@@ -1,10 +1,12 @@
 #include "Player.h"
 #include <iostream>
 //--------------------------------
-Player::Player():Fish(0){ 
+Player::Player():m_initialScaleX(0.5f), m_initialScaleY(0.5f),Fish(0)
+{
 	m_sprite.setTexture(Resources::instance().getTexture(ObjIndex::F_PLAYER));
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2.f,
         m_sprite.getTexture()->getSize().y / 2.f);
+    m_sprite.setScale(m_initialScaleX, m_initialScaleY);
 }
 //--------------------------------
 Player::Player(sf::RenderWindow& window) :Fish(0) {
@@ -57,6 +59,11 @@ bool Player::getGameOver() const { return m_game_over; }
 //-------------------
 void Player::move(sf::Time deltaTime,sf::RenderWindow& window,int side)
 {
+    if (m_score > 10)
+    {
+        m_initialScaleX = m_initialScaleY = 1.f;
+        //m_sprite.setScale(m_initialScaleX, m_initialScaleY);
+    }
     m_position_before = m_sprite.getPosition();
     m_sprite.move(dirFromKey() * SPEED_PLAYER * deltaTime.asSeconds());
     if (m_sprite.getPosition().x > window.getSize().x-150 ||
@@ -68,7 +75,7 @@ void Player::move(sf::Time deltaTime,sf::RenderWindow& window,int side)
     {
         if(m_scale)
         {
-            m_sprite.setScale(1.f, 1.f);
+            m_sprite.setScale(m_initialScaleX, m_initialScaleY);
             m_scale = false;
         }
     }
@@ -76,11 +83,12 @@ void Player::move(sf::Time deltaTime,sf::RenderWindow& window,int side)
     {
         if(!m_scale)
         {
-            m_sprite.setScale(-1.f, 1.f);
+            m_sprite.setScale(-m_initialScaleX, m_initialScaleY);
             m_scale = true;
         }
         
     }
+    
 }
 //-------------------
 void Player::setPosition(const int window_x, const int window_y)
