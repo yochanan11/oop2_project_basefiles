@@ -12,17 +12,19 @@ ObstacleFish::~ObstacleFish()
 {
 }
 //--------------------------------------------
-void ObstacleFish::move(sf::Time deltaTime, sf::RenderWindow& window)
+
+void ObstacleFish::move(sf::Time deltaTime)
 {
 	auto direction = getDirection();
-	sf::Vector2f vec(direction, 0.1f);
+	auto width = m_sprite.getGlobalBounds().width;
+	sf::Vector2f vec(direction, 0);
 	m_sprite.move(vec * SPEED_OBSTACLE_F * deltaTime.asSeconds());
-	if (direction == -1 && m_sprite.getPosition().x < 0)
-		m_sprite.setPosition(window.getSize().x, m_sprite.getPosition().y);
-	else if (m_sprite.getPosition().x > window.getSize().x)
-		m_sprite.setPosition(0, m_sprite.getPosition().y);
-	else if (m_sprite.getPosition().y > window.getSize().y)
-		m_sprite.setPosition(m_sprite.getPosition().x, 0);
+
+	// Check if fish goes off-screen and mark it for deletion
+	if (direction == -1 && m_sprite.getPosition().x < -(width / 2))
+		m_eaten = true;
+	else if (direction == 1 && m_sprite.getPosition().x > WINDOW_WIDHT + width / 2)
+		m_eaten = true;
 }
 //--------------------------------------------
 void ObstacleFish::handleCollision(GameObject& gameObject) { gameObject.handleCollision(*this); }

@@ -14,7 +14,7 @@ public:
 	virtual ~GameObject();
 	//virtual void setDirection(int) = 0;
 	virtual void draw(sf::RenderWindow&);
-	virtual void move(sf::Time, sf::RenderWindow&) = 0;
+	virtual void move(sf::Time) = 0;
 	virtual void handleCollision(GameObject& gameObject) = 0;
 	virtual void handleCollision(Player& gameObject) = 0;
 	virtual void handleCollision(FishEaten& gameObject) = 0;

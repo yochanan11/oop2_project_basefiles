@@ -9,9 +9,10 @@ public:
 	~Level1();
 	void run() override;
 	void handleCollisions(GameObject& );
-	void createRandomFish(int);
+	//void createRandomFish(int);
 
 private:
+	void createFish(int rand, bool isObstacle);
 
 };
 

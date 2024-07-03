@@ -8,7 +8,7 @@ void GameObject::draw(sf::RenderWindow& window) { window.draw(m_sprite); }
 //------------------------------------------
 sf::Sprite GameObject::getSprite() const { return m_sprite; }
 //------------------------------------------
-void GameObject::setRotation() { m_sprite.setScale(-1, 1); }
+void GameObject::setRotation() { m_sprite.scale(-1, 1); }
 //------------------------------------------
 bool GameObject::getIsEaten() const { return m_eaten; }
 //------------------------------------------

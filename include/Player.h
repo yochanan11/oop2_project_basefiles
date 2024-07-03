@@ -6,9 +6,8 @@ class Player : virtual public Fish
 {
 public:
 	Player();
-	Player(sf::RenderWindow&);
 	~Player();
-	virtual void move(sf::Time, sf::RenderWindow&) override;
+	virtual void move(sf::Time) override;
 	virtual void handleCollision(GameObject& gameObject) override;
 	virtual void handleCollision(Player& gameObject) override;
 	virtual void handleCollision(FishEaten & gameObject) override;

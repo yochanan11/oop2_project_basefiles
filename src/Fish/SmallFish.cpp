@@ -4,8 +4,8 @@
 SmallFish::SmallFish(const int rand) :FishEaten(2)
 {
 	m_sprite.setTexture(getRandTex(rand));
-	m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2.f,
-		m_sprite.getTexture()->getSize().y / 2.f);
+	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
+		m_sprite.getGlobalBounds().height / 2.f);
 }
 //----------------------------------
 SmallFish::~SmallFish()

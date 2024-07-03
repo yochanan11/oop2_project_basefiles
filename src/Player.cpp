@@ -10,11 +10,8 @@ Player::Player() : m_initialScaleX(0.5f), m_initialScaleY(0.5f), Fish(0)
     m_sprite.setOrigin(m_sprite.getTexture()->getSize().x / 2.f,
         m_sprite.getTexture()->getSize().y / 2.f);
     m_sprite.setScale(m_initialScaleX, m_initialScaleY);
-}
-//--------------------------------
-Player::Player(sf::RenderWindow& window) : Fish(0) {
-    m_sprite.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
-    Player();
+    m_sprite.setPosition(WINDOW_WIDHT / 2, WINDOW_HEIGHT / 2);
+
 }
 //--------------------------------
 Player::~Player() {}
@@ -61,7 +58,7 @@ void Player::handleCollision(ObstacleFish& gameObject)
 //------------------------------------
 bool Player::getGameOver() const { return m_game_over; }
 //-------------------
-void Player::move(sf::Time deltaTime, sf::RenderWindow& window)
+void Player::move(sf::Time deltaTime)
 {
     sf::Vector2f direction = dirFromKey();
     m_position_before = m_sprite.getPosition();
@@ -75,14 +72,14 @@ void Player::move(sf::Time deltaTime, sf::RenderWindow& window)
     else
         setDirection(0);
 
-    if (m_sprite.getPosition().x > window.getSize().x - m_sprite.getGlobalBounds().width / 2)
-        m_sprite.setPosition(window.getSize().x - m_sprite.getGlobalBounds().width / 2, m_sprite.getPosition().y);
+    if (m_sprite.getPosition().x > WINDOW_WIDHT - m_sprite.getGlobalBounds().width / 2)
+        m_sprite.setPosition(WINDOW_WIDHT - m_sprite.getGlobalBounds().width / 2, m_sprite.getPosition().y);
 
     if (m_sprite.getPosition().x < m_sprite.getGlobalBounds().width / 2)
         m_sprite.setPosition(m_sprite.getGlobalBounds().width / 2, m_sprite.getPosition().y);
 
-    if (m_sprite.getPosition().y > window.getSize().y - m_sprite.getGlobalBounds().height / 2)
-        m_sprite.setPosition(m_sprite.getPosition().x, window.getSize().y - m_sprite.getGlobalBounds().height / 2);
+    if (m_sprite.getPosition().y > WINDOW_HEIGHT - m_sprite.getGlobalBounds().height / 2)
+        m_sprite.setPosition(m_sprite.getPosition().x, WINDOW_HEIGHT - m_sprite.getGlobalBounds().height / 2);
 
     if (m_sprite.getPosition().y < m_sprite.getGlobalBounds().height / 2)
         m_sprite.setPosition(m_sprite.getPosition().x, m_sprite.getGlobalBounds().height / 2);

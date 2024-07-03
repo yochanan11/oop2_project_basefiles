@@ -10,7 +10,7 @@ FishEaten::~FishEaten()
 {
 }
 //--------------------------------------
-void FishEaten::move(sf::Time deltaTime, sf::RenderWindow& window)
+void FishEaten::move(sf::Time deltaTime)
 {
     auto direction = getDirection();
     auto width = m_sprite.getGlobalBounds().width;
@@ -20,7 +20,7 @@ void FishEaten::move(sf::Time deltaTime, sf::RenderWindow& window)
     // Check if fish goes off-screen and mark it for deletion
     if (direction == -1 && m_sprite.getPosition().x < -(width / 2))
         m_eaten = true;
-    else if (direction == 1 && m_sprite.getPosition().x > window.getSize().x + width / 2)
+    else if (direction == 1 && m_sprite.getPosition().x > WINDOW_WIDHT + width / 2)
         m_eaten = true;
 }
 
