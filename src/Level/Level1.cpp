@@ -1,4 +1,5 @@
 #include "Level/Level1.h"
+#include <iostream>
 
 Level1::Level1(){}
 
@@ -19,59 +20,62 @@ void Level1::run()
     m_window = &window;
     m_text_score.setPosition(sf::Vector2f(50.f, 50.f));
     std::srand(std::time(0));
-    int random_number;
-    for (size_t i = 1; i < 9; i++)
-    {
-        random_number = std::rand() % 4 + 1;
-        m_fish_eaten.push_back(std::make_unique<SmallFish>(random_number));
-        
-        if (i > 4)
-        {
-            m_fish_eaten[i - 1]->setRotation();
-            m_fish_eaten[i - 1]->setPosition(0, window.getSize().y * (i - 4.25));
-        }
-        else
-            m_fish_eaten[i - 1]->setPosition(window.getSize().x, window.getSize().y * (i - 0.5));
-    }
-    m_fish_eaten.push_back(std::make_unique<ObstacleFish>());
-    m_fish_eaten[m_fish_eaten.size() - 1]->setPosition(0, 0);
 
-    m_player->setPosition(window.getSize().x, window.getSize().y);
+    m_fish_eaten.push_back(std::make_unique<ObstacleFish>());
+
+    m_player->setPosition(window.getSize().x / 2, window.getSize().y / 2);
+    sf::Clock fishCreationClock; // Clock to track time for creating fish
+    float nextFishCreationTime = static_cast<float>(std::rand() % 2500 + 500); // Random interval between 1 and 5 seconds (1000 to 5000 ms)
+
     while (m_window->isOpen())
     {
         const auto deltaTime = m_game_clock.restart();
         sf::Event event;
         while (m_window->pollEvent(event))
         {
-            if (event.type == sf::Event::Closed ||m_player->getGameOver())
+            if (event.type == sf::Event::Closed || m_player->getGameOver())
                 m_window->close();
         }
-        m_player->move(deltaTime,*m_window,1);
+
+        // Check if the elapsed time has passed the random interval
+        if (fishCreationClock.getElapsedTime().asMilliseconds() >= nextFishCreationTime)
+        {
+            createRandomFish(std::rand());
+            fishCreationClock.restart(); // Reset the clock
+            nextFishCreationTime = static_cast<float>(std::rand() % 2500 + 500); // New random interval
+        }
+
+        m_player->move(deltaTime, *m_window);
+        m_player->setRotationAndScale();
+
         handleCollisions(*m_player);
         //m_player->animate(deltaTime);
-        int i = 1;
+
+        // Move fish and remove those that are eaten or off-screen
         for (auto& it : m_fish_eaten)
         {
-            if (i > 4)
-                it->move(deltaTime, *m_window, 1);
-            else
-                it->move(deltaTime, *m_window, -1);
- 
-            i++;
+            it->move(deltaTime, *m_window);
         }
+        m_fish_eaten.erase(std::remove_if(m_fish_eaten.begin(), m_fish_eaten.end(),
+            [](const std::unique_ptr<GameObject>& fish) {
+                return fish->getIsEaten();
+            }),
+            m_fish_eaten.end());
+
         m_text_score.setString("SCORE: " + std::to_string(m_player->getScore()));
         m_window->clear();
         m_window->draw(m_bec_level);
-        for (auto& it: m_fish_eaten)
+        for (auto& it : m_fish_eaten)
         {
-            if(!it->getIsEaten())
-                it->draw(*m_window);
+            it->draw(*m_window);
         }
         m_player->draw(*m_window);
         m_window->draw(m_text_score);
         m_window->display();
     }
 }
+
+
 //-------------------------------------------------------
 void Level1::handleCollisions(GameObject& gameObject)
 {
@@ -93,5 +97,29 @@ void Level1::handleCollisions(GameObject& gameObject)
     if (gameObject.checkCollision(*m_player))
     {
         gameObject.handleCollision(*m_player);
+    }
+}
+
+void Level1::createRandomFish(int rand)
+{
+    auto direction = rand % 2 == 0 ? 1 : -1;
+    auto width = m_fish_eaten[m_fish_eaten.size() - 1]->getGlobalBounds().width;
+
+    m_fish_eaten.push_back(std::make_unique<SmallFish>(rand % 4 + 1));
+    m_fish_eaten[m_fish_eaten.size() - 1]->setDirection(direction);
+
+    // Set a random scale between 0.3 and 1.8
+    float scale = static_cast<float>(rand % 10 + 3) / 10.0f;
+    m_fish_eaten[m_fish_eaten.size() - 1]->setScale(scale, scale);
+
+    if (direction == -1)
+    {
+        m_fish_eaten[m_fish_eaten.size() - 1]->setPosition(m_window->getSize().x + width,
+            rand % m_window->getSize().y);
+    }
+    else
+    {
+        m_fish_eaten[m_fish_eaten.size() - 1]->setRotation();
+        m_fish_eaten[m_fish_eaten.size() - 1]->setPosition(-width, rand % m_window->getSize().y);
     }
 }

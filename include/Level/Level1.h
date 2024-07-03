@@ -9,7 +9,7 @@ public:
 	~Level1();
 	void run() override;
 	void handleCollisions(GameObject& );
-
+	void createRandomFish(int);
 
 private:
 

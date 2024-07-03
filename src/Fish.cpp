@@ -11,3 +11,4 @@ int Fish::getScore() const { return m_score; }
 //--------------------------------
  void Fish::setScore(const int score)  {  m_score = score; }
 //--------------------------------
+

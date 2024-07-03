@@ -10,22 +10,20 @@ FishEaten::~FishEaten()
 {
 }
 //--------------------------------------
-void FishEaten::move(sf::Time deltaTime, sf::RenderWindow& window,int side)
+void FishEaten::move(sf::Time deltaTime, sf::RenderWindow& window)
 {
-	sf::Vector2f vec(side, 0.1f);
-	m_sprite.move(vec *SPEED_SFISH * deltaTime.asSeconds());
-	if (side == -1 && m_sprite.getPosition().x < 0)
-		m_sprite.setPosition(window.getSize().x, m_sprite.getPosition().y);
-	else if (m_sprite.getPosition().x > window.getSize().x)
-		m_sprite.setPosition(0, m_sprite.getPosition().y);
-	else if (m_sprite.getPosition().y > window.getSize().y)
-		m_sprite.setPosition(m_sprite.getPosition().x, 0);
+    auto direction = getDirection();
+    auto width = m_sprite.getGlobalBounds().width;
+    sf::Vector2f vec(direction, 0);
+    m_sprite.move(vec * SPEED_SFISH * deltaTime.asSeconds());
+
+    // Check if fish goes off-screen and mark it for deletion
+    if (direction == -1 && m_sprite.getPosition().x < -(width / 2))
+        m_eaten = true;
+    else if (direction == 1 && m_sprite.getPosition().x > window.getSize().x + width / 2)
+        m_eaten = true;
 }
-//--------------------------------------
-void FishEaten::setPosition(const int window_x, const int window_y)
-{
-	m_sprite.setPosition(sf::Vector2f(window_x, window_y/4.f));
-}
+
 //--------------------------------------
 void FishEaten::handleCollision(GameObject& gameObject){ gameObject.handleCollision(*this); }
 //----------------------------------------
