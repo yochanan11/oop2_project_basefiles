@@ -94,8 +94,6 @@ void Level1::run()
         m_window->display();
     }
 }
-
-
 //-------------------------------------------------------
 void Level1::handleCollisions(GameObject& gameObject)
 {
@@ -119,8 +117,7 @@ void Level1::handleCollisions(GameObject& gameObject)
         gameObject.handleCollision(*m_player);
     }
 }
-
-
+//-------------------------------------------------------
 void Level1::createFish(int rand, bool isObstacle)
 {
     auto random = std::rand();
@@ -133,7 +130,11 @@ void Level1::createFish(int rand, bool isObstacle)
         fish = std::make_unique<ObstacleFish>();
     else
     {
-        fish = std::make_unique<SmallFish>(rand % 4 + 1);
+        auto randFish = rand % 2 + 1;
+        if(randFish == 1)
+            fish = std::make_unique<SmallFish>(rand % 4 + 1);
+        else
+            fish = std::make_unique<MediumFish>();
         float scale = static_cast<float>(rand % 10 + 1 + m_player->getScore() / 10) / 10.0f;
         fish->setScale(scale, scale);
     }

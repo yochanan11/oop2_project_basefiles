@@ -5,6 +5,7 @@
 #include "Fish/Fish.h"
 #include "Fish/FishEaten.h"
 #include "Fish/SmallFish.h"
+#include"Fish/MediumFish.h"
 #include"Fish/ObstacleFish.h"
 
 

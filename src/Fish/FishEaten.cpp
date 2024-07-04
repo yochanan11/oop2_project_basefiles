@@ -3,7 +3,6 @@
 FishEaten::FishEaten(const int Score):Fish(Score)
 {
 	
-	//m_sprite.scale(-1, 0);
 }
 //-----------------------------------
 FishEaten::~FishEaten()
