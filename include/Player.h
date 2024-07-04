@@ -13,6 +13,8 @@ public:
 	virtual void handleCollision(FishEaten & gameObject) override;
 	virtual void handleCollision(ObstacleFish& gameObject) override;
 	bool getGameOver()const;
+	void setGameOver(bool);
+	void setFirstScale();
 	void setRotationAndScale();
 
 private:

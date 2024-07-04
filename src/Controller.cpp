@@ -27,4 +27,5 @@ void Controller::runMenu() {
 //------------------------------------
 void Controller::runGame() {
     m_level.activate();
+    runMenu();
 }

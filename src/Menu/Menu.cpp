@@ -61,6 +61,7 @@ bool Menu::performAction(unsigned n) {
 void Menu::handleMouseClick(const sf::Vector2f& mousePos) {
     for (unsigned i = 0; i < m_options.size(); i++) {
         if (m_options[i].second->isClicked(mousePos)) {
+            m_window->close();
             m_options[i].second->execute();
         }
     }

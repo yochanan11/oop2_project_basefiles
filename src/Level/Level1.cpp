@@ -16,6 +16,8 @@ void Level1::run()
 {
     m_fish_eaten.clear();
     m_player->setScore(0);
+    m_player->setGameOver(false);
+    m_player->setFirstScale();
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDHT, WINDOW_HEIGHT), "Fish Eats Fish");
     m_window = &window;
     m_text_score.setPosition(sf::Vector2f(50.f, 50.f));
@@ -35,8 +37,17 @@ void Level1::run()
         sf::Event event;
         while (m_window->pollEvent(event))
         {
-            if (event.type == sf::Event::Closed || m_player->getGameOver())
+            if (event.type == sf::Event::Closed)
                 m_window->close();
+            else if (m_player->getGameOver()) {
+                // הצגת "Game Over" על המסך
+                m_window->draw(m_game_over_rec);
+                m_window->draw(m_gameOverText);
+                m_window->display();
+                sf::sleep(sf::seconds(3)); // המתנה של 3 שניות לפני סגירת המשחק
+                m_window->close();
+            }
+            
         }
 
         // Check if the elapsed time has passed the random interval for creating obstacles

@@ -7,14 +7,7 @@ ControllerLevel::~ControllerLevel(){}
 void ControllerLevel::activate()
 {
     for (auto& level : m_levels)
-    {
         level.second->run();
-    }
-   /* int n;
-    do {
-        show();
-        n = getOptionFromUser();
-    } while (performAction(n));*/
 }
 //-------------------------------------
 void ControllerLevel::add(std::string name, std::unique_ptr<Level> c)

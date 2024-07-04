@@ -57,7 +57,15 @@ void Player::handleCollision(ObstacleFish& gameObject)
 }
 //------------------------------------
 bool Player::getGameOver() const { return m_game_over; }
-//-------------------
+//------------------------------------
+void Player::setGameOver(bool GameOver) { m_game_over = GameOver; }
+//------------------------------------
+void Player::setFirstScale() 
+{ 
+    m_sprite.setScale(0.5f, 0.5f); 
+    m_initialScaleX = 0.5f;
+}
+//------------------------------------
 void Player::move(sf::Time deltaTime)
 {
     sf::Vector2f direction = dirFromKey();
@@ -84,7 +92,7 @@ void Player::move(sf::Time deltaTime)
     if (m_sprite.getPosition().y < m_sprite.getGlobalBounds().height / 2)
         m_sprite.setPosition(m_sprite.getPosition().x, m_sprite.getGlobalBounds().height / 2);
 }
-
+//------------------------------------
 void Player::setRotationAndScale()
 {
     float scale = m_initialScaleX + (m_score * 0.01f);
@@ -95,3 +103,4 @@ void Player::setRotationAndScale()
         m_sprite.setScale(-scale, scale);
 
 }
+//------------------------------------
