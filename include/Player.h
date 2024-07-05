@@ -23,5 +23,8 @@ private:
 	bool m_open = false,m_game_over = false;
 	float m_initialScaleX; // scale הראשוני של התמונה
 	float m_initialScaleY; // scale הראשוני של התמונה
+	void handleSmallFishCollision(Fish& fish);
+	void handleMediumFishCollision(Fish& fish);
+	void isEaten(Fish&);
 
 };

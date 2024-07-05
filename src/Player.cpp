@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cmath>
 #include <iostream>
+#include <Fish/SmallFish.h>
+#include <Fish/MediumFish.h>
 
 //--------------------------------
 Player::Player() : m_initialScaleX(0.5f), m_initialScaleY(0.5f), Fish(0)
@@ -46,8 +48,16 @@ void Player::handleCollision(Player& gameObject) {}
 //------------------
 void Player::handleCollision(FishEaten& gameObject)
 {
-    m_score += gameObject.getScore();
-    Resources::instance().playSound(SoundIndex::EAT);
+    // Determine the type of FishEaten and handle accordingly
+    if (dynamic_cast<SmallFish*>(&gameObject)) {
+        handleSmallFishCollision(gameObject);
+    }
+    else if (dynamic_cast<MediumFish*>(&gameObject)) {
+        handleMediumFishCollision(gameObject);
+    }
+    else {
+        // Other fish collision handling
+    }
 }
 //------------------------------------
 void Player::handleCollision(ObstacleFish& gameObject)
@@ -103,3 +113,24 @@ void Player::setRotationAndScale()
 
 }
 //------------------------------------
+void Player::handleSmallFishCollision(Fish& fish) {
+    // Logic for handling collision with small fish
+    isEaten(fish);
+}
+//------------------------------------
+void Player::handleMediumFishCollision(Fish& fish) {
+    // Logic for handling collision with medium fish
+    if (m_score > 12) {
+        isEaten(fish);
+    }
+    else {
+        setGameOver(true);
+    }
+}
+//------------------------------------
+void Player::isEaten(Fish& fish)
+{
+    fish.setIsEaten(true);
+    m_score += fish.getScore();
+    Resources::instance().playSound(SoundIndex::EAT);
+}

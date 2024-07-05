@@ -28,6 +28,7 @@ public:
 	bool getIsEaten() const;
 	sf::FloatRect getGlobalBounds() const;
 	void setScale(float, float);
+	void setIsEaten(bool);
 
 protected:
 	sf::Sprite getSprite() const;

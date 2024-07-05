@@ -27,6 +27,11 @@ void GameObject::setScale(float scaleX, float scaleY)
 {
     m_sprite.setScale(scaleX, scaleY);
 }
+//-----------------------------
+void GameObject::setIsEaten(bool eaten)
+{
+	m_eaten = eaten;
+}
 //------------------------------------------
 void GameObject::setPosition(float x, float y) { m_sprite.setPosition(x, y); }
 //------------------------------------------
