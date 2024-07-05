@@ -52,7 +52,6 @@ void Player::handleCollision(FishEaten& gameObject)
 //------------------------------------
 void Player::handleCollision(ObstacleFish& gameObject)
 {
-    Resources::instance().playSound(SoundIndex::GAME_OVER);
     m_game_over = true;
 }
 //------------------------------------

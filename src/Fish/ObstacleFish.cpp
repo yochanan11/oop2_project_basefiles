@@ -31,6 +31,8 @@ void ObstacleFish::handleCollision(GameObject& gameObject) { gameObject.handleCo
 //--------------------------------------------
 void ObstacleFish::handleCollision(Player& gameObject)
 {
+	
+	/*gameObject.setGameOver(false);*/
 	gameObject.handleCollision(*this);
 }
 //--------------------------------------------

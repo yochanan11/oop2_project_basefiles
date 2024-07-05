@@ -34,22 +34,16 @@ void Level1::run()
     while (m_window->isOpen())
     {
         const auto deltaTime = m_game_clock.restart();
-        sf::Event event;
-        while (m_window->pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                m_window->close();
-            else if (m_player->getGameOver()) {
-                // הצגת "Game Over" על המסך
-                m_window->draw(m_game_over_rec);
-                m_window->draw(m_gameOverText);
-                m_window->display();
-                sf::sleep(sf::seconds(3)); // המתנה של 3 שניות לפני סגירת המשחק
-                m_window->close();
-            }
-            
+       
+        if (m_player->getGameOver()) {
+            Resources::instance().playSound(SoundIndex::GAME_OVER);
+            // הצגת "Game Over" על המסך
+            m_window->draw(m_game_over_rec);
+            m_window->draw(m_gameOverText);
+            m_window->display();
+            sf::sleep(sf::seconds(3)); // המתנה של 3 שניות לפני סגירת המשחק
+            m_window->close();
         }
-
         // Check if the elapsed time has passed the random interval for creating obstacles
         if (obstacleCreationClock.getElapsedTime().asMilliseconds() >= nextObstacleCreationTime)
         {
@@ -83,6 +77,13 @@ void Level1::run()
             m_fish_eaten.end());
 
         m_text_score.setString("SCORE: " + std::to_string(m_player->getScore()));
+        sf::Event event;
+        while (m_window->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                m_window->close();
+
+        }
         m_window->clear();
         m_window->draw(m_bec_level);
         for (auto& it : m_fish_eaten)
@@ -135,8 +136,8 @@ void Level1::createFish(int rand, bool isObstacle)
             fish = std::make_unique<SmallFish>(rand % 4 + 1);
         else
             fish = std::make_unique<MediumFish>();
-        float scale = static_cast<float>(rand % 10 + 1 + m_player->getScore() / 10) / 10.0f;
-        fish->setScale(scale, scale);
+       /* float scale = static_cast<float>(rand % 10 + 1 + m_player->getScore() / 10) / 10.0f;
+        fish->setScale(scale, scale);*/
     }
 
     fish->setDirection(direction);
