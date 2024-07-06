@@ -15,12 +15,13 @@ public:
     Level();
     Level(Player&,sf::Texture&);
     virtual void run() = 0;
-
+    virtual ~Level();
 protected:
     sf::Sprite m_bec_level;
     sf::RenderWindow* m_window = nullptr;
     Player* m_player = nullptr;
-    std::vector<std::unique_ptr<GameObject>> m_fish_eaten;
+    std::vector<std::unique_ptr<Fish>> m_fish;
+    std::vector<std::unique_ptr<GameObject>> m_objects;
     sf::Clock m_game_clock;
     sf::Text m_text_score, m_gameOverText;
     sf::RectangleShape m_game_over_rec;

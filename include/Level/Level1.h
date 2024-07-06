@@ -13,6 +13,11 @@ public:
 
 private:
 	void createFish(int rand, bool isObstacle);
+	void createObstacle();
+	void createGift();
+	void gameOver();
+	void newGame();
+	int m_fish_counter;
 
 };
 

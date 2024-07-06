@@ -34,13 +34,10 @@ void FishEaten::handleCollision(Player& gameObject)
 
 }
 //----------------------------------------
-void FishEaten::handleCollision(FishEaten& gameObject)
-{
-}
+void FishEaten::handleCollision(FishEaten& gameObject){}
 //----------------------------------------
-void FishEaten::handleCollision(ObstacleFish& gameObject)
-{
-}
+void FishEaten::handleCollision(ObstacleFish& gameObject){}
+//----------------------------------------
+void FishEaten::handleCollision(Obstacle& gameObject){}
 //----------------------------------------
 
-//--------------------------------------

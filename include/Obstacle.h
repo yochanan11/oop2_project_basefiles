@@ -1,20 +1,17 @@
 #pragma once
-#include "Fish/Fish.h"
+#include "GameObject.h"
 #include "Player.h"
 
-class ObstacleFish:virtual public Fish
+class Obstacle :  public GameObject
 {
 public:
-	ObstacleFish();
-	~ObstacleFish();
-	virtual void move(sf::Time) override;
+	Obstacle();
+	~Obstacle();
 	virtual void handleCollision(GameObject& gameObject) override;
 	virtual void handleCollision(Player& gameObject) override;
 	virtual void handleCollision(FishEaten& gameObject) override;
 	virtual void handleCollision(ObstacleFish& gameObject) override;
 	virtual void handleCollision(Obstacle& gameObject)override;
-
-
 private:
 
 };

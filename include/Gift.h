@@ -1,11 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
-class Gift : virtual public GameObject
+class Gift :  public GameObject
 {
 public:
 	Gift();
-	~Gift();
+	virtual ~Gift();
 
 private:
 

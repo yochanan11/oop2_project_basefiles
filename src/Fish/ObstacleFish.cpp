@@ -8,9 +8,7 @@ ObstacleFish::ObstacleFish() : Fish(0)
 
 }
 //--------------------------------------------
-ObstacleFish::~ObstacleFish()
-{
-}
+ObstacleFish::~ObstacleFish(){}
 //--------------------------------------------
 
 void ObstacleFish::move(sf::Time deltaTime)
@@ -36,11 +34,9 @@ void ObstacleFish::handleCollision(Player& gameObject)
 	gameObject.handleCollision(*this);
 }
 //--------------------------------------------
-void ObstacleFish::handleCollision(FishEaten& gameObject)
-{
-}
+void ObstacleFish::handleCollision(FishEaten& gameObject){}
 //--------------------------------------------
-void ObstacleFish::handleCollision(ObstacleFish& gameObject)
-{
-}
+void ObstacleFish::handleCollision(ObstacleFish& gameObject){}
+//--------------------------------------------
+void ObstacleFish::handleCollision(Obstacle& gameObject){}
 //--------------------------------------------

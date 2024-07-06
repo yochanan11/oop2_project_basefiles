@@ -12,6 +12,8 @@ public:
 	virtual void handleCollision(Player& gameObject) override;
 	virtual void handleCollision(FishEaten & gameObject) override;
 	virtual void handleCollision(ObstacleFish& gameObject) override;
+	virtual void handleCollision(Obstacle& gameObject)override;
+
 	bool getGameOver()const;
 	void setGameOver(bool);
 	void setFirstScale();

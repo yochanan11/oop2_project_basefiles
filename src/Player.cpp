@@ -60,9 +60,12 @@ void Player::handleCollision(FishEaten& gameObject)
     }
 }
 //------------------------------------
-void Player::handleCollision(ObstacleFish& gameObject)
-{
-    m_game_over = true;
+void Player::handleCollision(ObstacleFish& gameObject) { m_game_over = true; }
+//------------------------------------
+void Player::handleCollision(Obstacle& gameObject) { 
+    if (m_score <= 0)
+        m_game_over = true;
+    m_score -= 5; 
 }
 //------------------------------------
 bool Player::getGameOver() const { return m_game_over; }

@@ -6,6 +6,8 @@
 class Player;
 class FishEaten;
 class ObstacleFish;
+class Obstacle;
+class GiftFreeze;
 
 class GameObject
 {
@@ -14,11 +16,13 @@ public:
 	virtual ~GameObject();
 	//virtual void setDirection(int) = 0;
 	virtual void draw(sf::RenderWindow&);
-	virtual void move(sf::Time) = 0;
+	
 	virtual void handleCollision(GameObject& gameObject) = 0;
 	virtual void handleCollision(Player& gameObject) = 0;
 	virtual void handleCollision(FishEaten& gameObject) = 0;
 	virtual void handleCollision(ObstacleFish& gameObject) = 0;
+	virtual void handleCollision(Obstacle& gameObject) = 0;
+	//virtual void handleCollision(GiftFreeze& gameObject) = 0;
 
 	void setPosition(float, float);
 	void setDirection(int);
@@ -35,7 +39,5 @@ protected:
 	sf::Sprite m_sprite;
 	bool m_eaten = false;
 private:
-	int m_direction;
-	//sf::Sprite m_sprite;
-	
+	int m_direction;	
 };

@@ -1,60 +1,39 @@
 #include "Level/Level1.h"
 #include <iostream>
+#include "Obstacle.h"
+#include <GiftFreeze.h>
 
-Level1::Level1(){}
+Level1::Level1() : m_fish_counter(0) {}
 
-Level1::Level1(Player& player) :Level(player,
-	Resources::instance().getTexture(ObjIndex::BACKGROUND))
-{
-}
+Level1::Level1(Player& player) : Level(player, Resources::instance().getTexture(ObjIndex::BACKGROUND)), m_fish_counter(0) {}
+
 //---------------------------------
-Level1::~Level1()
-{
-}
+Level1::~Level1() {}
+
 //---------------------------------
-void Level1::run()
-{
-    m_fish_eaten.clear();
-    m_player->setScore(0);
-    m_player->setGameOver(false);
-    m_player->setFirstScale();
+void Level1::run() {
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDHT, WINDOW_HEIGHT), "Fish Eats Fish");
     m_window = &window;
-    m_text_score.setPosition(sf::Vector2f(50.f, 50.f));
-    std::srand(std::time(0));
-
-    m_fish_eaten.push_back(std::make_unique<ObstacleFish>());
-
+    newGame();
     sf::Clock fishCreationClock; // Clock to track time for creating fish
     float nextFishCreationTime = static_cast<float>(std::rand() % 2000 + 400); // Random interval between 1 and 5 seconds (1000 to 5000 ms)
 
     sf::Clock obstacleCreationClock; // Clock to track time for creating obstacles
     float nextObstacleCreationTime = static_cast<float>(std::rand() % 29000 + 1000); // Random interval between 1 and 20 seconds (1000 to 20000 ms)
 
-    while (m_window->isOpen())
-    {
+    while (m_window->isOpen()) {
         const auto deltaTime = m_game_clock.restart();
-       
-        if (m_player->getGameOver()) {
-            Resources::instance().playSound(SoundIndex::GAME_OVER);
-            // הצגת "Game Over" על המסך
-            m_window->draw(m_game_over_rec);
-            m_window->draw(m_gameOverText);
-            m_window->display();
-            sf::sleep(sf::seconds(3)); // המתנה של 3 שניות לפני סגירת המשחק
-            m_window->close();
-        }
+        gameOver();
+
         // Check if the elapsed time has passed the random interval for creating obstacles
-        if (obstacleCreationClock.getElapsedTime().asMilliseconds() >= nextObstacleCreationTime)
-        {
+        if (obstacleCreationClock.getElapsedTime().asMilliseconds() >= nextObstacleCreationTime) {
             createFish(std::rand(), true); // Create an obstacle fish
             obstacleCreationClock.restart(); // Reset the clock
             nextObstacleCreationTime = static_cast<float>(std::rand() % 29000 + 1000); // New random interval (1 to 20 seconds)
         }
 
         // Check if the elapsed time has passed the random interval for creating fish
-        if (fishCreationClock.getElapsedTime().asMilliseconds() >= nextFishCreationTime)
-        {
+        if (fishCreationClock.getElapsedTime().asMilliseconds() >= nextFishCreationTime) {
             createFish(std::rand(), false); // Create a random fish
             fishCreationClock.restart(); // Reset the clock
             nextFishCreationTime = static_cast<float>(std::rand() % 2000 + 400); // New random interval (1 to 5 seconds)
@@ -66,28 +45,28 @@ void Level1::run()
         handleCollisions(*m_player);
 
         // Move fish and remove those that are eaten or off-screen
-        for (auto& it : m_fish_eaten)
-        {
+        for (auto& it : m_fish) {
             it->move(deltaTime);
         }
-        m_fish_eaten.erase(std::remove_if(m_fish_eaten.begin(), m_fish_eaten.end(),
-            [](const std::unique_ptr<GameObject>& fish) {
+        m_fish.erase(std::remove_if(m_fish.begin(), m_fish.end(),
+            [](const std::unique_ptr<Fish>& fish) {
                 return fish->getIsEaten();
             }),
-            m_fish_eaten.end());
+            m_fish.end());
 
         m_text_score.setString("SCORE: " + std::to_string(m_player->getScore()));
         sf::Event event;
-        while (m_window->pollEvent(event))
-        {
+        while (m_window->pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 m_window->close();
 
         }
         m_window->clear();
         m_window->draw(m_bec_level);
-        for (auto& it : m_fish_eaten)
-        {
+        for (auto& it : m_fish) {
+            it->draw(*m_window);
+        }
+        for (auto& it : m_objects) {
             it->draw(*m_window);
         }
         m_player->draw(*m_window);
@@ -95,65 +74,113 @@ void Level1::run()
         m_window->display();
     }
 }
-//-------------------------------------------------------
-void Level1::handleCollisions(GameObject& gameObject)
-{
-    for (size_t i = 0; i < m_fish_eaten.size(); i++)
-    {
-        if (gameObject.checkCollision(*m_fish_eaten[i]))
-        {
-            gameObject.handleCollision(*m_fish_eaten[i]);
-        }
-    }
 
-    for (size_t i = 0; i < m_fish_eaten.size(); i++)
-    {
-        if (gameObject.checkCollision(*m_fish_eaten[i]))
-        {
-            gameObject.handleCollision(*m_fish_eaten[i]);
+//-------------------------------------------------------
+void Level1::handleCollisions(GameObject& gameObject) {
+    for (size_t i = 0; i < m_fish.size(); i++) {
+        if (gameObject.checkCollision(*m_fish[i])) {
+            gameObject.handleCollision(*m_fish[i]);
         }
     }
-    if (gameObject.checkCollision(*m_player))
-    {
+    for (size_t i = 0; i < m_objects.size(); i++) {
+        if (gameObject.checkCollision(*m_objects[i])) {
+            gameObject.handleCollision(*m_objects[i]);
+        }
+    }
+    if (gameObject.checkCollision(*m_player)) {
         gameObject.handleCollision(*m_player);
     }
 }
+
 //-------------------------------------------------------
-void Level1::createFish(int rand, bool isObstacle)
-{
+void Level1::createFish(int rand, bool isObstacle) {
     auto random = std::rand();
     auto direction = rand % 2 == 0 ? 1 : -1;
     if (random % 2 == 0)
         direction *= -1;
 
-    std::unique_ptr<GameObject> fish;
-    if (isObstacle)
-        fish = std::make_unique<ObstacleFish>();
-    else
-    {
-        auto randFish = rand % 2 + 1;
-        if(randFish == 1)
-            fish = std::make_unique<SmallFish>(rand % 4 + 1);
-        else
-            fish = std::make_unique<MediumFish>();
-       /* float scale = static_cast<float>(rand % 10 + 1 + m_player->getScore() / 10) / 10.0f;
-        fish->setScale(scale, scale);*/
+    std::unique_ptr<Fish> fish;
+
+    if (m_fish_counter < 10) {
+        // Create small fish for the first 10 fish
+        fish = std::make_unique<SmallFish>(rand % 4 + 1);
+    }
+    else {
+        // After 10 fish, create a mix of fish types
+        if (isObstacle && m_fish_counter >= 10) {
+            fish = std::make_unique<ObstacleFish>();
+        }
+        else {
+            auto randFish = rand % 2 + 1;
+            if (randFish == 1) {
+                fish = std::make_unique<SmallFish>(rand % 4 + 1);
+            }
+            else {
+                fish = std::make_unique<MediumFish>();
+            }
+        }
+
+        // Every 10 fish, create a gift
+        if (m_fish_counter % 10 == 0 && m_fish_counter !=0) {
+            createGift();
+        }
     }
 
     fish->setDirection(direction);
 
     auto width = fish->getGlobalBounds().width;
 
-    if (direction == -1)
-    {
+    if (direction == -1) {
         fish->setPosition(m_window->getSize().x + width,
             rand % m_window->getSize().y);
     }
-    else
-    {
+    else {
         fish->setRotation();
         fish->setPosition(-width, rand % m_window->getSize().y);
     }
 
-    m_fish_eaten.push_back(std::move(fish));
+    m_fish.push_back(std::move(fish));
+    m_fish_counter++;
+}
+
+//-------------------------------------
+void Level1::createObstacle() {
+    for (size_t i = 0; i < 3; i++) {
+        auto obstacle = std::make_unique<Obstacle>();
+        obstacle->setPosition((i + 1) * 350.f, WINDOW_HEIGHT - 50.f);
+        m_objects.push_back(std::move(obstacle));
+    }
+}
+
+//-------------------------------------
+void Level1::createGift() {
+    auto gift = std::make_unique<GiftFreeze>(); // Initialize the gift
+    gift->setPosition(std::rand() % WINDOW_WIDHT, std::rand() % WINDOW_HEIGHT);
+    m_objects.push_back(std::move(gift)); // Add the gift to the list
+}
+
+//-------------------------------------
+void Level1::gameOver() {
+    if (m_player->getGameOver()) {
+        Resources::instance().playSound(SoundIndex::GAME_OVER);
+        m_window->draw(m_game_over_rec);
+        m_window->draw(m_gameOverText);
+        m_window->display();
+        sf::sleep(sf::seconds(3));
+        m_window->close();
+    }
+}
+
+//-------------------------------------
+void Level1::newGame() {
+    m_fish.clear();
+    m_player->setScore(0);
+    m_player->setGameOver(false);
+    m_player->setFirstScale();
+    m_player->setPosition(WINDOW_WIDHT / 2, WINDOW_HEIGHT / 2);
+    m_text_score.setPosition(sf::Vector2f(50.f, 50.f));
+    std::srand(std::time(0));
+    m_fish_counter = 0; // Reset fish counter
+    createObstacle();
+    createGift();
 }

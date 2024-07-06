@@ -5,9 +5,10 @@ class Fish:  virtual public GameObject
 {
 public:
 	Fish(int);
-	~Fish();
+	virtual ~Fish();
 	int getScore()const;
 	void setScore(const int);
+	virtual void move(sf::Time) = 0;
 
 protected:
 	int m_score;
