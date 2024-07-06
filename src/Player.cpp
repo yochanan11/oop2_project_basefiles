@@ -67,6 +67,10 @@ void Player::handleCollision(Obstacle& gameObject) {
         m_game_over = true;
     m_score -= 5; 
 }
+//-------------------------------------
+void Player::handleCollision(GiftFreeze& gameObject)
+{
+}
 //------------------------------------
 bool Player::getGameOver() const { return m_game_over; }
 //------------------------------------

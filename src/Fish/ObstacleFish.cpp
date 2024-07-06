@@ -29,7 +29,6 @@ void ObstacleFish::handleCollision(GameObject& gameObject) { gameObject.handleCo
 //--------------------------------------------
 void ObstacleFish::handleCollision(Player& gameObject)
 {
-	
 	/*gameObject.setGameOver(false);*/
 	gameObject.handleCollision(*this);
 }
@@ -39,4 +38,6 @@ void ObstacleFish::handleCollision(FishEaten& gameObject){}
 void ObstacleFish::handleCollision(ObstacleFish& gameObject){}
 //--------------------------------------------
 void ObstacleFish::handleCollision(Obstacle& gameObject){}
+//--------------------------------------------
+void ObstacleFish::handleCollision(GiftFreeze& gameObject){}
 //--------------------------------------------

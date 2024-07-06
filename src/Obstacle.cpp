@@ -21,3 +21,5 @@ void Obstacle::handleCollision(ObstacleFish& gameObject){}
 //-------------------------------------------
 void Obstacle::handleCollision(Obstacle& gameObject){}
 //-------------------------------------------
+void Obstacle::handleCollision(GiftFreeze& gameObject){}
+//-------------------------------------------

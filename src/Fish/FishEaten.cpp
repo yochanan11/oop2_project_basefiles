@@ -40,4 +40,6 @@ void FishEaten::handleCollision(ObstacleFish& gameObject){}
 //----------------------------------------
 void FishEaten::handleCollision(Obstacle& gameObject){}
 //----------------------------------------
+void FishEaten::handleCollision(GiftFreeze& gameObject){}
+//----------------------------------------
 

@@ -15,17 +15,22 @@ void GiftFreeze::handleCollision(GameObject& gameObject) { gameObject.handleColl
 //---------------------------------------
 void GiftFreeze::handleCollision(Player& gameObject)
 {
-	gameObject.handleCollision(*this);
+	if(!m_eaten)
+	{
+		gameObject.handleCollision(*this);
+	}
+	m_eaten = true;
 }
 //---------------------------------------
 void GiftFreeze::handleCollision(FishEaten& gameObject){}
 //---------------------------------------
 void GiftFreeze::handleCollision(Obstacle& gameObject){}
+
 //---------------------------------------
  void GiftFreeze::handleCollision(ObstacleFish& gameObject){}
 //---------------------------------------
-//void GiftFreeze::handleCollision(GiftFreeze& gameObject)
-//{
-//}
+void GiftFreeze::handleCollision(GiftFreeze& gameObject)
+{
+}
 ////---------------------------------------
 

@@ -54,6 +54,12 @@ void Level1::run() {
             }),
             m_fish.end());
 
+        m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(),
+            [](const std::unique_ptr<GameObject>& object) {
+                return object->getIsEaten();
+            }),
+            m_objects.end());
+
         m_text_score.setString("SCORE: " + std::to_string(m_player->getScore()));
         sf::Event event;
         while (m_window->pollEvent(event)) {
@@ -174,6 +180,7 @@ void Level1::gameOver() {
 //-------------------------------------
 void Level1::newGame() {
     m_fish.clear();
+    m_objects.clear();
     m_player->setScore(0);
     m_player->setGameOver(false);
     m_player->setFirstScale();
