@@ -23,3 +23,5 @@ void Obstacle::handleCollision(Obstacle& gameObject){}
 //-------------------------------------------
 void Obstacle::handleCollision(GiftFreeze& gameObject){}
 //-------------------------------------------
+void Obstacle::handleCollision(GiftSpeed& gameObject){}
+//-------------------------------------------

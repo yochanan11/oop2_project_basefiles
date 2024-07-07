@@ -41,3 +41,5 @@ void ObstacleFish::handleCollision(Obstacle& gameObject){}
 //--------------------------------------------
 void ObstacleFish::handleCollision(GiftFreeze& gameObject){}
 //--------------------------------------------
+void ObstacleFish::handleCollision(GiftSpeed& gameObject){}
+//--------------------------------------------

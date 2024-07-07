@@ -42,4 +42,6 @@ void FishEaten::handleCollision(Obstacle& gameObject){}
 //----------------------------------------
 void FishEaten::handleCollision(GiftFreeze& gameObject){}
 //----------------------------------------
+void FishEaten::handleCollision(GiftSpeed& gameObject){}
+//----------------------------------------
 

@@ -1,15 +1,14 @@
 #include "Level/Level1.h"
 #include <iostream>
 #include "Obstacle.h"
-#include <GiftFreeze.h>
+#include "GiftFreeze.h"
+#include "GiftSpeed.h"
 
 Level1::Level1() : m_fish_counter(0) {}
-
+//---------------------------------
 Level1::Level1(Player& player) : Level(player, Resources::instance().getTexture(ObjIndex::BACKGROUND)), m_fish_counter(0) {}
-
 //---------------------------------
 Level1::~Level1() {}
-
 //---------------------------------
 void Level1::run() {
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDHT, WINDOW_HEIGHT), "Fish Eats Fish");
@@ -65,8 +64,8 @@ void Level1::run() {
         while (m_window->pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 m_window->close();
-
         }
+
         m_window->clear();
         m_window->draw(m_bec_level);
         for (auto& it : m_fish) {
@@ -80,7 +79,6 @@ void Level1::run() {
         m_window->display();
     }
 }
-
 //-------------------------------------------------------
 void Level1::handleCollisions(GameObject& gameObject) {
     for (size_t i = 0; i < m_fish.size(); i++) {
@@ -97,10 +95,10 @@ void Level1::handleCollisions(GameObject& gameObject) {
         gameObject.handleCollision(*m_player);
     }
 }
-
 //-------------------------------------------------------
 void Level1::createFish(int rand, bool isObstacle) {
     auto random = std::rand();
+    int numGift = 1;
     auto direction = rand % 2 == 0 ? 1 : -1;
     if (random % 2 == 0)
         direction *= -1;
@@ -113,7 +111,7 @@ void Level1::createFish(int rand, bool isObstacle) {
     }
     else {
         // After 10 fish, create a mix of fish types
-        if (isObstacle && m_fish_counter >= 10) {
+        if (isObstacle) {
             fish = std::make_unique<ObstacleFish>();
         }
         else {
@@ -127,11 +125,11 @@ void Level1::createFish(int rand, bool isObstacle) {
         }
 
         // Every 10 fish, create a gift
-        if (m_fish_counter % 10 == 0 && m_fish_counter !=0) {
+        if (m_fish_counter != 0 && m_fish_counter % (numGift * 10) == 0) {
             createGift();
+            numGift++;
         }
     }
-
     fish->setDirection(direction);
 
     auto width = fish->getGlobalBounds().width;
@@ -148,7 +146,6 @@ void Level1::createFish(int rand, bool isObstacle) {
     m_fish.push_back(std::move(fish));
     m_fish_counter++;
 }
-
 //-------------------------------------
 void Level1::createObstacle() {
     for (size_t i = 0; i < 3; i++) {
@@ -157,14 +154,28 @@ void Level1::createObstacle() {
         m_objects.push_back(std::move(obstacle));
     }
 }
-
 //-------------------------------------
-void Level1::createGift() {
-    auto gift = std::make_unique<GiftFreeze>(); // Initialize the gift
-    gift->setPosition(std::rand() % WINDOW_WIDHT, std::rand() % WINDOW_HEIGHT);
-    m_objects.push_back(std::move(gift)); // Add the gift to the list
-}
+void Level1::createGift()
+{
+   
+        std::unique_ptr<Gift> gift;
+        int randomGiftType = std::rand() % 2; // מספר המתנות השונות
 
+        switch (randomGiftType) {
+        case 0:
+            gift = std::make_unique<GiftFreeze>();
+            break;
+        case 1:
+            gift = std::make_unique<GiftSpeed>();
+            break;
+            // הוסף כאן מקרים נוספים עבור מתנות אחרות בעתיד
+        }
+
+        // Initialize the gift position
+        gift->setPosition(std::rand() % WINDOW_WIDHT, std::rand() % WINDOW_HEIGHT);
+        m_objects.push_back(std::move(gift)); // Add the gift to the list
+
+}
 //-------------------------------------
 void Level1::gameOver() {
     if (m_player->getGameOver()) {
@@ -176,7 +187,6 @@ void Level1::gameOver() {
         m_window->close();
     }
 }
-
 //-------------------------------------
 void Level1::newGame() {
     m_fish.clear();
@@ -189,5 +199,4 @@ void Level1::newGame() {
     std::srand(std::time(0));
     m_fish_counter = 0; // Reset fish counter
     createObstacle();
-    createGift();
 }

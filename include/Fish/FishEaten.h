@@ -15,6 +15,8 @@ public:
 	virtual void handleCollision(ObstacleFish& gameObject) override;
 	virtual void handleCollision(Obstacle& gameObject)override;
 	virtual void handleCollision(GiftFreeze& gameObject)override;
+	virtual void handleCollision(GiftSpeed& gameObject) override;
+
 private:
 };
 

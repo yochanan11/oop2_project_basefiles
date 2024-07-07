@@ -14,6 +14,7 @@ public:
 	virtual void handleCollision(ObstacleFish& gameObject) override;
 	virtual void handleCollision(Obstacle& gameObject)override;
 	virtual void handleCollision(GiftFreeze& gameObject)override;
+	virtual void handleCollision(GiftSpeed& gameObject)override;
 
 	bool getGameOver()const;
 	void setGameOver(bool);
@@ -23,11 +24,12 @@ public:
 private:
 	sf::Vector2f dirFromKey();
 	sf::Vector2f m_position_before;
-	bool m_open = false,m_game_over = false;
-	float m_initialScaleX; // scale הראשוני של התמונה
-	float m_initialScaleY; // scale הראשוני של התמונה
+	sf::Clock m_speedClock , m_freezeClock;
+	bool m_open = false,m_game_over = false, m_speedActive = false, m_freezeActive = false;
+	float m_initialScaleX; 
+
 	void handleSmallFishCollision(Fish& fish);
 	void handleMediumFishCollision(Fish& fish);
 	void isEaten(Fish&);
-
+	void resetEffect(bool&);
 };

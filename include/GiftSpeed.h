@@ -2,11 +2,11 @@
 #include "Gift.h"
 #include "Player.h"
 
-class GiftFreeze : public Gift
+class GiftSpeed : public Gift
 {
 public:
-    GiftFreeze();
-    ~GiftFreeze();
+    GiftSpeed();
+    ~GiftSpeed();
     virtual void handleCollision(GameObject& gameObject) override;
     virtual void handleCollision(Player& gameObject) override;
     virtual void handleCollision(FishEaten& gameObject) override;
@@ -15,6 +15,6 @@ public:
     virtual void handleCollision(GiftFreeze& gameObject) override;
     virtual void handleCollision(GiftSpeed& gameObject) override;
 
+
 private:
-   
 };
