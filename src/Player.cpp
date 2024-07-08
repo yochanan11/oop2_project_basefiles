@@ -148,6 +148,10 @@ void Player::setRotationAndScale()
 
 }
 //------------------------------------
+void Player::setName(std::string name) { m_name = name; }
+//------------------------------------
+std::string Player::getName() const { return m_name; }
+//------------------------------------
 void Player::handleSmallFishCollision(Fish& fish) {
     // Logic for handling collision with small fish
     isEaten(fish);

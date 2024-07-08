@@ -20,8 +20,11 @@ public:
 	void setGameOver(bool);
 	void setFirstScale();
 	void setRotationAndScale();
+	void setName(std::string);
+	std::string getName()const;
 
 private:
+	std::string m_name;
 	sf::Vector2f dirFromKey();
 	sf::Vector2f m_position_before;
 	sf::Clock m_speedClock , m_freezeClock;
@@ -32,4 +35,5 @@ private:
 	void handleMediumFishCollision(Fish& fish);
 	void isEaten(Fish&);
 	void resetEffect(bool&);
+
 };
