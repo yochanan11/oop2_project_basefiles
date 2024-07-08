@@ -17,7 +17,7 @@ public:
     virtual void run() = 0;
     virtual ~Level();
 protected:
-    sf::Sprite m_bec_level;
+    sf::Sprite m_bec_level,m_small_fish,m_medium_fish;
     sf::RenderWindow* m_window = nullptr;
     Player* m_player = nullptr;
     std::vector<std::unique_ptr<Fish>> m_fish;

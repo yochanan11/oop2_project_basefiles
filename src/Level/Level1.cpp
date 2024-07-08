@@ -6,7 +6,15 @@
 
 Level1::Level1() : m_fish_counter(0) {}
 //---------------------------------
-Level1::Level1(Player& player) : Level(player, Resources::instance().getTexture(ObjIndex::BACKGROUND)), m_fish_counter(0) {}
+Level1::Level1(Player& player) : Level(player, Resources::instance().getTexture(ObjIndex::BACKGROUND))
+, m_fish_counter(0)
+{
+    m_small_fish.setScale(0.45f, 0.45f);
+    m_small_fish.setPosition(WINDOW_WIDHT - 100,80);
+    m_medium_fish.setScale(0.35f, 0.35f);
+    m_medium_fish.setPosition(WINDOW_WIDHT - 180, 80);
+    
+}
 //---------------------------------
 Level1::~Level1() {}
 //---------------------------------
@@ -77,6 +85,9 @@ void Level1::run() {
         }
         m_player->draw(*m_window);
         m_window->draw(m_text_score);
+        m_window->draw(m_small_fish);
+        if (m_player->getScore() >= 16)
+            m_window->draw(m_medium_fish);
         m_window->display();
     }
 }
