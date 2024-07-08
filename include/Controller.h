@@ -11,6 +11,7 @@ public:
     void run();
     void runMenu();
     void runGame();
+    Player& getPlayer();
 
 private:
     Menu m_menu;

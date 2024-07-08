@@ -18,6 +18,5 @@ private:
     void createGift();
     void gameOver();
     void newGame();
-    std::string getPlayerName();
     int m_fish_counter;
 };

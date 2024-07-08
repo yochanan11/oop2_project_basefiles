@@ -11,8 +11,7 @@ Level1::Level1(Player& player) : Level(player, Resources::instance().getTexture(
 Level1::~Level1() {}
 //---------------------------------
 void Level1::run() {
-    std::string playerName = getPlayerName();
-    m_player->setName(playerName);
+    
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDHT, WINDOW_HEIGHT), "Fish Eats Fish");
     m_window = &window;
     newGame();
@@ -205,45 +204,3 @@ void Level1::newGame() {
    
 }
 
-std::string Level1::getPlayerName() {
-    sf::RenderWindow inputWindow(sf::VideoMode(400, 200), "Enter Your Name");
-    
-    sf::Text prompt("Enter your name:", 
-        Resources::instance().getFont(), 24);
-    prompt.setPosition(10, 10);
-    prompt.setFillColor(sf::Color::White);
-
-    sf::Text userInputText("", Resources::instance().getFont(), 24);
-    userInputText.setPosition(10, 60);
-    userInputText.setFillColor(sf::Color::White);
-
-    std::string userInput;
-    while (inputWindow.isOpen()) {
-        sf::Event event;
-        while (inputWindow.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                inputWindow.close();
-
-            if (event.type == sf::Event::TextEntered) {
-                if (event.text.unicode == '\b') { // Handle backspace
-                    if (!userInput.empty())
-                        userInput.pop_back();
-                }
-                else if (event.text.unicode == '\r' || event.text.unicode == '\n') { // Handle enter key
-                    inputWindow.close();
-                }
-                else if (event.text.unicode < 128) { // Only ASCII characters
-                    userInput += static_cast<char>(event.text.unicode);
-                }
-            }
-        }
-
-        userInputText.setString(userInput);
-        inputWindow.clear(sf::Color::Blue);
-        inputWindow.draw(prompt);
-        inputWindow.draw(userInputText);
-        inputWindow.display();
-    }
-
-    return userInput;
-}

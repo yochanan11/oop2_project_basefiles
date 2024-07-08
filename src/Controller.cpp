@@ -29,3 +29,8 @@ void Controller::runGame() {
     m_level.activate();
     runMenu();
 }
+
+Player& Controller::getPlayer()
+{
+    return m_player;
+}

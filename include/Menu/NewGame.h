@@ -10,4 +10,6 @@ public:
 
 private:
     Controller* m_controller; // שמירת מצביע ל-Controller
+    std::string getPlayerName();
+
 };
