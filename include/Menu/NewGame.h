@@ -4,12 +4,12 @@
 
 class NewGame : public Command {
 public:
-    NewGame(Controller* controller); // קבל מצביע ל-Controller
+    NewGame(Controller* controller); 
     ~NewGame();
     void execute() override;
 
 private:
-    Controller* m_controller; // שמירת מצביע ל-Controller
+    Controller* m_controller; 
     std::string getPlayerName();
 
 };

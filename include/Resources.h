@@ -3,7 +3,7 @@
 #include <SFML/Audio.hpp>
 
 const size_t OBJECTS = 15;
-const size_t SOUND_BUFFER = 2;
+const size_t SOUND_BUFFER = 3;
 
 enum class ObjIndex
 {
@@ -12,7 +12,7 @@ enum class ObjIndex
 };
 enum class SoundIndex
 {
-	EAT,GAME_OVER
+	EAT,GAME_OVER, GIFT
 };
 
 class Resources
@@ -42,7 +42,8 @@ private:
 	std::string m_font_name = "BubblegumSans-Regular.ttf" ,m_music_name = "sound.wav";
 	std::string	m_soundBuffer_name[SOUND_BUFFER] = {
 		"eat.wav" ,
-		"gameover.wav"
+		"gameover.wav",
+		"GiftEffect.wav"
 		/*,"GiftEffect.wav"*/
 	};
 	sf::Font m_font;

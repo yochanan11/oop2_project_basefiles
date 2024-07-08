@@ -80,6 +80,7 @@ void Player::handleCollision(GiftFreeze& gameObject)
         m_freezeActive = true;
         m_sprite.setColor(sf::Color(255, 255, 255, 128));
         m_freezeClock.restart();
+        Resources::instance().playSound(SoundIndex::GIFT);
     }
 }
 //-------------------------------------
@@ -90,6 +91,7 @@ void Player::handleCollision(GiftSpeed& gameObject)
         m_speedActive = true;
         m_sprite.setColor(sf::Color(200, 200, 200, 200));
         m_speedClock.restart();
+        Resources::instance().playSound(SoundIndex::GIFT);
     }
 }
 //------------------------------------
