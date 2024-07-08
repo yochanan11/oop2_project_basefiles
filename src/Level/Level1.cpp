@@ -10,10 +10,10 @@ Level1::Level1(Player& player) : Level(player, Resources::instance().getTexture(
 , m_fish_counter(0)
 {
     m_small_fish.setScale(0.45f, 0.45f);
-    m_small_fish.setPosition(WINDOW_WIDHT - 100,80);
+    m_small_fish.setPosition(WINDOW_WIDHT - 100,20);
     m_medium_fish.setScale(0.35f, 0.35f);
-    m_medium_fish.setPosition(WINDOW_WIDHT - 180, 80);
-    
+    m_medium_fish.setPosition(WINDOW_WIDHT - 180, 20);
+    m_text_score.setPosition(50,20);
 }
 //---------------------------------
 Level1::~Level1() {}
@@ -74,6 +74,8 @@ void Level1::run() {
             if (event.type == sf::Event::Closed)
                 m_window->close();
         }
+        if(m_player->getScore() == 16)
+            Resources::instance().playSound(SoundIndex::GROWTH);
 
         m_window->clear();
         m_window->draw(m_bec_level);
@@ -84,6 +86,7 @@ void Level1::run() {
             it->draw(*m_window);
         }
         m_player->draw(*m_window);
+        m_window->draw(m_top_rec);
         m_window->draw(m_text_score);
         m_window->draw(m_small_fish);
         if (m_player->getScore() >= 16)
@@ -208,7 +211,7 @@ void Level1::newGame() {
     m_player->setGameOver(false);
     m_player->setFirstScale();
     m_player->setPosition(WINDOW_WIDHT / 2, WINDOW_HEIGHT / 2);
-    m_text_score.setPosition(sf::Vector2f(50.f, 50.f));
+    
     std::srand(std::time(0));
     m_fish_counter = 0; // Reset fish counter
     createObstacle();
