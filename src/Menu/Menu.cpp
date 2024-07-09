@@ -18,7 +18,9 @@ void Menu::drawMenu() {
         sf::Event event;
         while (m_window->pollEvent(event)) {
             if (event.type == sf::Event::Closed)
+            {
                 m_window->close();
+            }
             else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                 sf::Vector2f mousePos(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
                 handleMouseClick(mousePos);
@@ -28,7 +30,7 @@ void Menu::drawMenu() {
         m_window->draw(m_bac);
 
         for (const auto& option : m_options) {
-            option.second->draw(*m_window); // ציור כל כפתור
+            option.second->draw(*m_window);
         }
 
         m_window->display();

@@ -24,17 +24,8 @@ void Controller::run() {
 
 }
 //------------------------------------
-void Controller::runMenu() {
-    
-    m_menu.drawMenu();
-}
+void Controller::runMenu() { m_menu.drawMenu(); }
 //------------------------------------
-void Controller::runGame() {
-    m_level.activate();
-    runMenu();
-}
-
-Player& Controller::getPlayer()
-{
-    return m_player;
-}
+void Controller::runGame() {m_level.activate(); }
+//------------------------------------
+Player& Controller::getPlayer(){return m_player; }

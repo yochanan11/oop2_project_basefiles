@@ -61,7 +61,7 @@ void Player::handleCollision(FishEaten& gameObject)
 void Player::handleCollision(ObstacleFish& gameObject)
 {
     if (!m_freezeActive)
-        m_game_over = true;
+        throw std::runtime_error("Game over");
 }
 //------------------------------------
 void Player::handleCollision(Obstacle& gameObject) {
@@ -69,7 +69,7 @@ void Player::handleCollision(Obstacle& gameObject) {
     {
         m_sprite.setPosition(m_position_before.x, m_position_before.y - 50);
         if (m_score - 5 <= 0)
-            m_game_over = true;
+            throw std::runtime_error("Game over");
         else
             m_score -= 5;
     }
@@ -164,7 +164,7 @@ void Player::handleSmallFishCollision(Fish& fish) {
 void Player::handleMediumFishCollision(Fish& fish) {
     // Logic for handling collision with medium fish
     if (!m_freezeActive && m_score < 16)
-        setGameOver(true);
+        throw std::runtime_error("Game over");
     else
         isEaten(fish);
 }

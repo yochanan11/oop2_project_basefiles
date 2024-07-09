@@ -30,60 +30,65 @@ void Level1::run() {
 
     while (m_window->isOpen()) {
         const auto deltaTime = m_game_clock.restart();
-        gameOver();
+        try {
 
-        // Check if the elapsed time has passed the random interval for creating obstacles
-        if (obstacleCreationClock.getElapsedTime().asMilliseconds() >= nextObstacleCreationTime) {
-            createFish(std::rand(), true); // Create an obstacle fish
-            obstacleCreationClock.restart(); // Reset the clock
-            nextObstacleCreationTime = static_cast<float>(std::rand() % 29000 + 1000); // New random interval (1 to 20 seconds)
+
+            
+
+            // Check if the elapsed time has passed the random interval for creating obstacles
+            if (obstacleCreationClock.getElapsedTime().asMilliseconds() >= nextObstacleCreationTime) {
+                createFish(std::rand(), true); // Create an obstacle fish
+                obstacleCreationClock.restart(); // Reset the clock
+                nextObstacleCreationTime = static_cast<float>(std::rand() % 29000 + 1000); // New random interval (1 to 20 seconds)
+            }
+
+            // Check if the elapsed time has passed the random interval for creating fish
+            if (fishCreationClock.getElapsedTime().asMilliseconds() >= nextFishCreationTime) {
+                createFish(std::rand(), false); // Create a random fish
+                fishCreationClock.restart(); // Reset the clock
+                nextFishCreationTime = static_cast<float>(std::rand() % 2000 + 400); // New random interval (1 to 5 seconds)
+            }
+
+            m_player->move(deltaTime);
+            m_player->setRotationAndScale();
+
+            handleCollisions(*m_player);
+
+            // Move fish and remove those that are eaten or off-screen
+            for (auto& it : m_fish) {
+                it->move(deltaTime);
+            }
+            m_fish.erase(std::remove_if(m_fish.begin(), m_fish.end(),
+                [](const std::unique_ptr<Fish>& fish) {
+                    return fish->getIsEaten();
+                }),
+                m_fish.end());
+
+            m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(),
+                [](const std::unique_ptr<GameObject>& object) {
+                    return object->getIsEaten();
+                }),
+                m_objects.end());
+
+            m_text_score.setString(m_player->getName() + " your score: " + std::to_string(m_player->getScore()));
+            sf::Event event;
+            while (m_window->pollEvent(event)) {
+                if (event.type == sf::Event::Closed)
+                    m_window->close();
+            }
+            if (m_player->getScore() == 16)
+                Resources::instance().playSound(SoundIndex::GROWTH);
         }
-
-        // Check if the elapsed time has passed the random interval for creating fish
-        if (fishCreationClock.getElapsedTime().asMilliseconds() >= nextFishCreationTime) {
-            createFish(std::rand(), false); // Create a random fish
-            fishCreationClock.restart(); // Reset the clock
-            nextFishCreationTime = static_cast<float>(std::rand() % 2000 + 400); // New random interval (1 to 5 seconds)
+        catch (const std::exception&)
+        {
+            gameOver();
         }
-
-        m_player->move(deltaTime);
-        m_player->setRotationAndScale();
-
-        handleCollisions(*m_player);
-
-        // Move fish and remove those that are eaten or off-screen
-        for (auto& it : m_fish) {
-            it->move(deltaTime);
-        }
-        m_fish.erase(std::remove_if(m_fish.begin(), m_fish.end(),
-            [](const std::unique_ptr<Fish>& fish) {
-                return fish->getIsEaten();
-            }),
-            m_fish.end());
-
-        m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(),
-            [](const std::unique_ptr<GameObject>& object) {
-                return object->getIsEaten();
-            }),
-            m_objects.end());
-
-        m_text_score.setString(m_player->getName() + " your score: " + std::to_string(m_player->getScore()));
-        sf::Event event;
-        while (m_window->pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                m_window->close();
-        }
-        if(m_player->getScore() == 16)
-            Resources::instance().playSound(SoundIndex::GROWTH);
-
         m_window->clear();
         m_window->draw(m_bec_level);
-        for (auto& it : m_fish) {
+        for (auto& it : m_fish) 
             it->draw(*m_window);
-        }
-        for (auto& it : m_objects) {
+        for (auto& it : m_objects) 
             it->draw(*m_window);
-        }
         m_player->draw(*m_window);
         m_window->draw(m_top_rec);
         m_window->draw(m_text_score);
@@ -192,14 +197,12 @@ void Level1::createGift()
 }
 //-------------------------------------
 void Level1::gameOver() {
-    if (m_player->getGameOver()) {
         Resources::instance().playSound(SoundIndex::GAME_OVER);
         m_window->draw(m_game_over_rec);
         m_window->draw(m_gameOverText);
         m_window->display();
         sf::sleep(sf::seconds(3));
         m_window->close();
-    }
 }
 //-------------------------------------
 void Level1::newGame() {

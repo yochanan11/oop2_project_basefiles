@@ -6,7 +6,6 @@ GameObject::~GameObject() {}
 //------------------------------------------
 void GameObject::draw(sf::RenderWindow& window) {
 	window.draw(m_sprite); 
-	window.draw(m_size);
 }
 //------------------------------------------
 sf::Sprite GameObject::getSprite() const { return m_sprite; }
