@@ -24,6 +24,8 @@ private:
     void drawRecords(sf::RenderWindow& window) const;
     void backToStart();
 
+    sf::Sprite m_background;
+    sf::RectangleShape m_rec;
     std::fstream& m_file_records;
     std::multimap<size_t, std::string> m_records;
     sf::Text m_txt_title, m_txt_records;

@@ -7,18 +7,19 @@
 //---------------------------------
 Level1::Level1(Player& player) : Level(player, Resources::instance().getTexture(ObjIndex::BACKGROUND))
 , m_fish_counter(0)
+, m_next_shark_spawn(10) 
 {
     m_small_fish.setScale(0.45f, 0.45f);
-    m_small_fish.setPosition(WINDOW_WIDHT - 100,20);
+    m_small_fish.setPosition(WINDOW_WIDHT - 100, 20);
     m_medium_fish.setScale(0.35f, 0.35f);
     m_medium_fish.setPosition(WINDOW_WIDHT - 180, 20);
-    m_text_score.setPosition(50,20);
+    m_text_score.setPosition(50, 20);
 }
 //---------------------------------
 Level1::~Level1() {}
 //---------------------------------
 void Level1::run() {
-    
+
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDHT, WINDOW_HEIGHT), "Fish Eats Fish");
     m_window = &window;
     newGame();
@@ -76,7 +77,7 @@ void Level1::run() {
                     saveToFile();
                 }
             }
-            
+
         }
         catch (const std::exception&)
         {
@@ -84,11 +85,11 @@ void Level1::run() {
         }
         m_window->clear();
         m_window->draw(m_bec_level);
-        for (auto& it : m_fish) 
+        for (auto& it : m_fish)
             it->draw(*m_window);
-        for (auto& it : m_objects) 
+        for (auto& it : m_objects)
             it->draw(*m_window);
-        for(auto& it : m_obstacle)
+        for (auto& it : m_obstacle)
             it->draw(*m_window);
         m_player->draw(*m_window);
         m_window->draw(m_top_rec);
@@ -130,30 +131,33 @@ void Level1::createFish(int rand, bool isObstacle) {
 
     std::unique_ptr<Fish> fish;
 
-    if (m_fish_counter < 8) {
-        // Create small fish for the first 8 fish
+    if (m_fish_counter == m_next_shark_spawn) {
+        fish = std::make_unique<ObstacleFish>();
+        if (m_next_shark_spawn == 10)
+            m_next_shark_spawn += 8;
+        else if (m_next_shark_spawn == 18)
+            m_next_shark_spawn += 6;
+        else
+            m_next_shark_spawn += 4;
+    }
+    else if (m_fish_counter < 10) {
         fish = std::make_unique<SmallFish>(rand % 4 + 1);
     }
     else {
-        // After 8 fish, create a mix of fish types
-        if (isObstacle) {
-            fish = std::make_unique<ObstacleFish>();
+        auto randFish = rand % 2 + 1;
+        if (randFish == 1) {
+            fish = std::make_unique<SmallFish>(rand % 4 + 1);
         }
         else {
-            auto randFish = rand % 2 + 1;
-            if (randFish == 1) {
-                fish = std::make_unique<SmallFish>(rand % 4 + 1);
-            }
-            else {
-                fish = std::make_unique<MediumFish>();
-            }
+            fish = std::make_unique<MediumFish>();
         }
 
         if (m_fish_counter != 0 && m_fish_counter % (numGift * 10) == 0) {
             createGift();
-            numGift+= 2;
+            numGift+=2;
         }
     }
+
     fish->setDirection(direction);
 
     auto width = fish->getGlobalBounds().width;
@@ -170,6 +174,7 @@ void Level1::createFish(int rand, bool isObstacle) {
     m_fish.push_back(std::move(fish));
     m_fish_counter++;
 }
+
 //-------------------------------------
 void Level1::createObstacle() {
     for (size_t i = 0; i < 3; i++) {
@@ -181,48 +186,48 @@ void Level1::createObstacle() {
 //-------------------------------------
 void Level1::createGift()
 {
-   
-        std::unique_ptr<Gift> gift;
-        int randomGiftType = std::rand() % 2; // מספר המתנות השונות
 
-        switch (randomGiftType) {
-        case 0:
-            gift = std::make_unique<GiftFreeze>();
-            break;
-        case 1:
-            gift = std::make_unique<GiftSpeed>();
-            break;
-            // הוסף כאן מקרים נוספים עבור מתנות אחרות בעתיד
-        }
+    std::unique_ptr<Gift> gift;
+    int randomGiftType = std::rand() % 2; // מספר המתנות השונות
 
-        // Initialize the gift position
-        gift->setPosition(std::rand() % WINDOW_WIDHT, std::rand() % WINDOW_HEIGHT);
-        m_objects.push_back(std::move(gift)); // Add the gift to the list
+    switch (randomGiftType) {
+    case 0:
+        gift = std::make_unique<GiftFreeze>();
+        break;
+    case 1:
+        gift = std::make_unique<GiftSpeed>();
+        break;
+        // הוסף כאן מקרים נוספים עבור מתנות אחרות בעתיד
+    }
+
+    // Initialize the gift position
+    gift->setPosition(std::rand() % WINDOW_WIDHT, std::rand() % WINDOW_HEIGHT);
+    m_objects.push_back(std::move(gift)); // Add the gift to the list
 
 }
 //-------------------------------------
 void Level1::gameOver() {
-        Resources::instance().playSound(SoundIndex::GAME_OVER);
-        m_window->draw(m_game_over_rec);
-        m_window->draw(m_gameOverText);
-        m_window->display();
-        sf::sleep(sf::seconds(3));
-        m_window->close();
-        saveToFile();
+    Resources::instance().playSound(SoundIndex::GAME_OVER);
+    m_window->draw(m_game_over_rec);
+    m_window->draw(m_gameOverText);
+    m_window->display();
+    sf::sleep(sf::seconds(3));
+    m_window->close();
+    saveToFile();
 }
 //-------------------------------------
 void Level1::newGame() {
-    
+
     m_fish.clear();
     m_objects.clear();
     m_player->setScore(0);
     m_player->setGameOver(false);
     m_player->setFirstScale();
     m_player->setPosition(WINDOW_WIDHT / 2, WINDOW_HEIGHT / 2);
-    
+
     std::srand(std::time(0));
     m_fish_counter = 0; // Reset fish counter
+    m_next_shark_spawn = 10; // Reset shark spawn counter
     createObstacle();
-   
-}
 
+}

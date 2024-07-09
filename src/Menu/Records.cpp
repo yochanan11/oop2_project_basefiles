@@ -8,7 +8,10 @@
 Records::Records() : Command(Resources::instance().getTexture(ObjIndex::RECORDS_B), sf::Vector2f(810, 560)),
 m_txt_title(sf::Text("RECORDS", Resources::instance().getFont(), 100)),
 m_file_records(Resources::instance().getRecordsFile()),
-m_txt_records("", Resources::instance().getFont(), 50)
+m_txt_records("", Resources::instance().getFont(), 50),
+m_background(Resources::instance().getTexture(ObjIndex::RECORDS_BEC)),
+m_rec(sf::RectangleShape(sf::Vector2f(RECORDS_WINDOW_WIDTH - 200, RECORDS_WINDOW_HEIGHT - 100))) 
+
 {
     m_sprite_menu.setScale(0.35f, 0.35f);
 
@@ -17,8 +20,14 @@ m_txt_records("", Resources::instance().getFont(), 50)
     m_txt_title.setOrigin(m_txt_title.getGlobalBounds().width / 2, m_txt_title.getGlobalBounds().height / 2);
     m_txt_title.setStyle(sf::Text::Underlined);
 
-    m_txt_records.setPosition(RECORDS_WINDOW_WIDTH / 2, RECORDS_WINDOW_HEIGHT / 1.5);
+    m_txt_records.setPosition(RECORDS_WINDOW_WIDTH / 2, RECORDS_WINDOW_HEIGHT / 2);
     m_txt_records.setFillColor(sf::Color::Blue);
+    m_background.setScale(
+        float(RECORDS_WINDOW_WIDTH) / m_background.getTexture()->getSize().x,
+        float(RECORDS_WINDOW_HEIGHT) / m_background.getTexture()->getSize().y
+    );
+    m_rec.setPosition( 100,  100);
+    m_rec.setFillColor(sf::Color(255, 255, 255, 200));
 }
 
 //----------------------------------------------------------
@@ -45,7 +54,9 @@ void Records::execute()
                 recordsWindow.close();
             }
         }
-        recordsWindow.clear(sf::Color::White);
+        recordsWindow.clear();
+        recordsWindow.draw(m_background);
+        recordsWindow.draw(m_rec);
         drawRecords(recordsWindow);
         recordsWindow.display();
     }
