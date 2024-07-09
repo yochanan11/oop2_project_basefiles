@@ -9,7 +9,6 @@ void Menu::add(std::string name, std::unique_ptr<Command> c) {
 }
 //------------------------------------
 void Menu::activate() {
-    // פונקציה להפעלת התפריט (לא משמשת כרגע)
 }
 //------------------------------------
 void Menu::drawMenu() {

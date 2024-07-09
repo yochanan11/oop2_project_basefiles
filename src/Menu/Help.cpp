@@ -8,9 +8,9 @@ Help::Help()
 {
     m_sprite_menu.setScale(0.35f, 0.35f);
 }
-
+//-------------------------------------
 Help::~Help() {}
-
+//-------------------------------------
 void Help::execute() {
     // Create the new window
     sf::RenderWindow helpWindow(sf::VideoMode(900, 675), "Help");

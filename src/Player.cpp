@@ -100,10 +100,6 @@ void Player::handleCollision(GiftSpeed& gameObject)
     }
 }
 //------------------------------------
-bool Player::getGameOver() const { return m_game_over; }
-//------------------------------------
-void Player::setGameOver(bool GameOver) { m_game_over = GameOver; }
-//------------------------------------
 void Player::setFirstScale()
 {
     m_sprite.setScale(0.5f, 0.5f);

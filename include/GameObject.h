@@ -15,7 +15,6 @@ class GameObject
 public:
 	GameObject();
 	virtual ~GameObject();
-	//virtual void setDirection(int) = 0;
 	virtual void draw(sf::RenderWindow&);
 	virtual void handleCollision(GameObject& gameObject) = 0;
 	virtual void handleCollision(Player& gameObject) = 0;

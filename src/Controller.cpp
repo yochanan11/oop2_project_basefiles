@@ -17,7 +17,7 @@ void Controller::run() {
     m_menu.add("help", std::make_unique<Help>());
     m_menu.add("records", std::make_unique<Records>());
     m_level.add("Level1", std::make_unique<Level1>(m_player));
-    // m_level.add("Level2", std::make_unique<Level2>(m_player));
+    // m_level.add("Level2", std::make_unique<Level2>(m_player)); //For in a example
     runMenu();
     Resources::instance().getMusic().stop();
 

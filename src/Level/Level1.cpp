@@ -174,7 +174,6 @@ void Level1::createFish(int rand, bool isObstacle) {
     m_fish.push_back(std::move(fish));
     m_fish_counter++;
 }
-
 //-------------------------------------
 void Level1::createObstacle() {
     for (size_t i = 0; i < 3; i++) {
@@ -186,7 +185,6 @@ void Level1::createObstacle() {
 //-------------------------------------
 void Level1::createGift()
 {
-
     std::unique_ptr<Gift> gift;
     int randomGiftType = std::rand() % 2; // מספר המתנות השונות
 
@@ -197,13 +195,12 @@ void Level1::createGift()
     case 1:
         gift = std::make_unique<GiftSpeed>();
         break;
-        // הוסף כאן מקרים נוספים עבור מתנות אחרות בעתיד
+        // Add additional cases here for other gifts in the future
     }
 
     // Initialize the gift position
     gift->setPosition(std::rand() % WINDOW_WIDHT, std::rand() % WINDOW_HEIGHT);
     m_objects.push_back(std::move(gift)); // Add the gift to the list
-
 }
 //-------------------------------------
 void Level1::gameOver() {
@@ -217,17 +214,13 @@ void Level1::gameOver() {
 }
 //-------------------------------------
 void Level1::newGame() {
-
     m_fish.clear();
     m_objects.clear();
     m_player->setScore(0);
-    m_player->setGameOver(false);
     m_player->setFirstScale();
     m_player->setPosition(WINDOW_WIDHT / 2, WINDOW_HEIGHT / 2);
-
     std::srand(std::time(0));
     m_fish_counter = 0; // Reset fish counter
     m_next_shark_spawn = 10; // Reset shark spawn counter
     createObstacle();
-
 }

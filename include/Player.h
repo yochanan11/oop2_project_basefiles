@@ -16,8 +16,7 @@ public:
 	virtual void handleCollision(GiftFreeze& gameObject)override;
 	virtual void handleCollision(GiftSpeed& gameObject)override;
 
-	bool getGameOver()const;
-	void setGameOver(bool);
+	
 	void setFirstScale();
 	void setRotationAndScale();
 	void setName(std::string);
@@ -28,7 +27,7 @@ private:
 	sf::Vector2f dirFromKey();
 	sf::Vector2f m_position_before;
 	sf::Clock m_speedClock , m_freezeClock;
-	bool m_open = false,m_game_over = false, m_speedActive = false, m_freezeActive = false;
+	bool m_open = false, m_speedActive = false, m_freezeActive = false;
 	float m_initialScaleX; 
 
 	void handleSmallFishCollision(Fish& fish);

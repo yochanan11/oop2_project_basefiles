@@ -46,7 +46,6 @@ private:
 		"eat.wav" ,
 		"gameover.wav",
 		"GiftEffect.wav","growth.wav"
-		/*,"GiftEffect.wav"*/
 	};
 	std::string m_records_file_name = "Records.txt";
 	sf::Font m_font;
