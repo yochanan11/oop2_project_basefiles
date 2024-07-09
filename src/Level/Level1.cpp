@@ -32,9 +32,6 @@ void Level1::run() {
         const auto deltaTime = m_game_clock.restart();
         try {
 
-
-            
-
             // Check if the elapsed time has passed the random interval for creating obstacles
             if (obstacleCreationClock.getElapsedTime().asMilliseconds() >= nextObstacleCreationTime) {
                 createFish(std::rand(), true); // Create an obstacle fish
@@ -74,7 +71,10 @@ void Level1::run() {
             sf::Event event;
             while (m_window->pollEvent(event)) {
                 if (event.type == sf::Event::Closed)
+                {
                     m_window->close();
+                    saveToFile();
+                }
             }
             
         }
@@ -130,12 +130,12 @@ void Level1::createFish(int rand, bool isObstacle) {
 
     std::unique_ptr<Fish> fish;
 
-    if (m_fish_counter < 10) {
-        // Create small fish for the first 10 fish
+    if (m_fish_counter < 8) {
+        // Create small fish for the first 8 fish
         fish = std::make_unique<SmallFish>(rand % 4 + 1);
     }
     else {
-        // After 10 fish, create a mix of fish types
+        // After 8 fish, create a mix of fish types
         if (isObstacle) {
             fish = std::make_unique<ObstacleFish>();
         }
@@ -149,10 +149,9 @@ void Level1::createFish(int rand, bool isObstacle) {
             }
         }
 
-        // Every 10 fish, create a gift
         if (m_fish_counter != 0 && m_fish_counter % (numGift * 10) == 0) {
             createGift();
-            numGift++;
+            numGift+= 2;
         }
     }
     fish->setDirection(direction);
@@ -209,6 +208,7 @@ void Level1::gameOver() {
         m_window->display();
         sf::sleep(sf::seconds(3));
         m_window->close();
+        saveToFile();
 }
 //-------------------------------------
 void Level1::newGame() {

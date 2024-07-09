@@ -1,4 +1,5 @@
 #include "Level/Level.h"
+#include <iostream>
 //----------------------------------------------
 Level::Level(Player& Player, sf::Texture& texture) :m_player(&Player), m_bec_level(texture),
 m_text_score("SCORE: " + std::to_string(m_player->getScore())
@@ -22,4 +23,17 @@ m_text_score("SCORE: " + std::to_string(m_player->getScore())
 //----------------------------------------------
 Level::~Level(){}
 //----------------------------------------------
+void Level::saveToFile()
+{
+    
+        std::ofstream out("Records.txt", std::ios::app);
+        if (out.is_open()) {
+            out << m_player->getName() << " " << m_player->getScore() << std::endl;
+            out.close();
+        }
+        else {
+            std::cerr << "Failed to open the records file for writing" << std::endl;
+        }
+    
+}
 //----------------------------------------------

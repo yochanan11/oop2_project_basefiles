@@ -12,6 +12,9 @@ Resources::Resources()
 	m_font.loadFromFile(m_font_name);
 	m_music.openFromFile(m_music_name);
 	m_records_file = std::fstream(m_records_file_name, std::ios_base::in | std::ios_base::out);
+	if (!m_records_file.is_open()) {
+		std::cerr << "Failed to open the records file: " << m_records_file_name << std::endl;
+	}
 }
 
 //--------------------------------------

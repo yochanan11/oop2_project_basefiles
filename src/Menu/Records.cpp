@@ -2,6 +2,7 @@
 #include "Resources.h"
 #include <sstream>
 #include "Macrose.h"
+#include <iostream>
 
 //----------------------------------------------------------
 Records::Records() : Command(Resources::instance().getTexture(ObjIndex::RECORDS_B), sf::Vector2f(810, 560)),
@@ -44,7 +45,6 @@ void Records::execute()
                 recordsWindow.close();
             }
         }
-
         recordsWindow.clear(sf::Color::White);
         drawRecords(recordsWindow);
         recordsWindow.display();
@@ -62,7 +62,7 @@ void Records::drawRecords(sf::RenderWindow& window) const
 void Records::loadRecords()
 {
     m_records.clear();
-
+    backToStart();
     std::string line, name, records = "";
     auto space = std::string("\t..................\t");
     size_t score;

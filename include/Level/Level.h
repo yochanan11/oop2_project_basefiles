@@ -25,6 +25,7 @@ protected:
     sf::Clock m_game_clock;
     sf::Text m_text_score, m_gameOverText;
     sf::RectangleShape m_game_over_rec, m_top_rec;
+    void saveToFile();
         
 };
 
