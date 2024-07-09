@@ -4,7 +4,6 @@
 #include "GiftFreeze.h"
 #include "GiftSpeed.h"
 
-Level1::Level1() : m_fish_counter(0) {}
 //---------------------------------
 Level1::Level1(Player& player) : Level(player, Resources::instance().getTexture(ObjIndex::BACKGROUND))
 , m_fish_counter(0)

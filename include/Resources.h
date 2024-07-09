@@ -1,14 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <fstream>
 
-const size_t OBJECTS = 15;
+const size_t OBJECTS = 18;
 const size_t SOUND_BUFFER = 4;
 
 enum class ObjIndex
 {
-	BACKGROUND,F_PLAYER, F_PLAYER1,MENU,FISH_E1, FISH_E2, FISH_E3, FISH_E4, F_PLAYER_S
-	, NEW_GAME_B, OBSTACLE_F, MEDIUM_FISH, OBSTACLE, GIFT, RED_GIFT
+	BACKGROUND, HELP, F_PLAYER, F_PLAYER1,MENU,FISH_E1, FISH_E2, FISH_E3, FISH_E4, F_PLAYER_S
+	, NEW_GAME_B, HELP_B, RECORDS_B, OBSTACLE_F, MEDIUM_FISH, OBSTACLE, GIFT, RED_GIFT
 };
 enum class SoundIndex
 {
@@ -26,6 +27,7 @@ public:
 	sf::Font& getFont();
 	void playSound(SoundIndex);
 	sf::Music& getMusic();
+	std::fstream& getRecordsFile();
 
 private:
 	Resources();
@@ -33,9 +35,9 @@ private:
 
 	std::string m_textures_name[OBJECTS] =
 	{
-		"background.png","Fish_player.png","Fish_player1.png","Menu.png","Fish_Eaten1.png",
+		"background.png", "help.jpeg", "Fish_player.png","Fish_player1.png","Menu.png","Fish_Eaten1.png",
 		"Fish_Eaten2.png","Fish_Eaten3.png","Fish_Eaten4.png","Fish_player_sprite.png",
-		"NEW GAME B1.png","ObstacleFish.png","MediumFish.png","Obstacle.png","Gift.png",
+		"new-game.png", "help.png", "records.png", "ObstacleFish.png","MediumFish.png","Obstacle.png","Gift.png",
 		"Red_Gift.png"
 	};
 	sf::Texture m_objects_texture[OBJECTS];
@@ -46,8 +48,10 @@ private:
 		"GiftEffect.wav","growth.wav"
 		/*,"GiftEffect.wav"*/
 	};
+	std::string m_records_file_name = "Records.txt";
 	sf::Font m_font;
 	sf::SoundBuffer m_sound_buffer[SOUND_BUFFER];
 	sf::Music m_music;
 	sf::Sound m_sound;
+	std::fstream m_records_file;
 };

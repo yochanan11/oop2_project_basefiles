@@ -12,7 +12,6 @@
 
 class Level {
 public:
-    Level();
     Level(Player&,sf::Texture&);
     virtual void run() = 0;
     virtual ~Level();

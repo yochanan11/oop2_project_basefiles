@@ -55,6 +55,9 @@ bool Menu::performAction(unsigned n) {
     if (n >= m_options.size())
         return false;
     m_options[n].second->execute();
+
+    // After executing the command, ensure the menu window remains open or reopens
+    drawMenu();
     return true;
 }
 //------------------------------------
@@ -63,6 +66,9 @@ void Menu::handleMouseClick(const sf::Vector2f& mousePos) {
         if (m_options[i].second->isClicked(mousePos)) {
             m_window->close();
             m_options[i].second->execute();
+
+            // After executing the command, ensure the menu window remains open or reopens
+            drawMenu();
         }
     }
 }

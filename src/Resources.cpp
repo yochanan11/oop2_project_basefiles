@@ -6,10 +6,12 @@ Resources::Resources()
 {
 	for (auto i = size_t(0); i < OBJECTS; ++i)
 		m_objects_texture[i].loadFromFile(m_textures_name[i]);
+
 	for (auto i = size_t(0); i < SOUND_BUFFER; ++i)
 		m_sound_buffer[i].loadFromFile(m_soundBuffer_name[i]);
 	m_font.loadFromFile(m_font_name);
 	m_music.openFromFile(m_music_name);
+	m_records_file = std::fstream(m_records_file_name, std::ios_base::in | std::ios_base::out);
 }
 
 //--------------------------------------
@@ -24,5 +26,6 @@ void Resources::playSound(SoundIndex type) {
 }
 //-----------------------------------------------
 sf::Music& Resources::getMusic() { return m_music; }
+std::fstream& Resources::getRecordsFile() { return m_records_file; }
 //--------------------------------------
 Resources::~Resources(){}

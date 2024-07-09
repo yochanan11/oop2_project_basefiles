@@ -68,9 +68,10 @@ void Player::handleCollision(Obstacle& gameObject) {
     if (!m_freezeActive)
     {
         m_sprite.setPosition(m_position_before.x, m_position_before.y - 50);
-        if (m_score <= 0)
+        if (m_score - 5 <= 0)
             m_game_over = true;
-        m_score -= 5;
+        else
+            m_score -= 5;
     }
 }
 //-------------------------------------
