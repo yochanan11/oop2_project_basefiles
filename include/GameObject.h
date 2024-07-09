@@ -38,6 +38,7 @@ public:
 protected:
 	sf::Sprite getSprite() const;
 	sf::Sprite m_sprite;
+	sf::Text m_size;
 	bool m_eaten = false;
 private:
 	int m_direction;	
