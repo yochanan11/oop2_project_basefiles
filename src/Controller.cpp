@@ -5,7 +5,6 @@
 #include "Level/Level1.h"
 
 Controller::Controller() {
-    m_bac.setTexture(Resources::instance().getTexture(ObjIndex::BACKGROUND));
 }
 //------------------------------------
 Controller::~Controller() {}

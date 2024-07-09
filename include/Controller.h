@@ -16,7 +16,5 @@ public:
 private:
     Menu m_menu;
     ControllerLevel m_level;
-    //sf::RenderWindow* m_window = nullptr;
     Player m_player;
-    sf::Sprite m_bac;
 };

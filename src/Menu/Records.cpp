@@ -24,7 +24,7 @@ m_rec(sf::RectangleShape(sf::Vector2f(RECORDS_WINDOW_WIDTH - 200, RECORDS_WINDOW
         float(RECORDS_WINDOW_WIDTH) / m_background.getTexture()->getSize().x,
         float(RECORDS_WINDOW_HEIGHT) / m_background.getTexture()->getSize().y
     );
-    m_rec.setPosition(100, 50);
+    m_rec.setPosition(100, 80);
     m_rec.setFillColor(sf::Color(255, 255, 255, 200));
 }
 

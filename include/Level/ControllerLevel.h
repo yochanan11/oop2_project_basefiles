@@ -16,6 +16,4 @@ public:
 private:
     typedef std::pair<std::string, std::unique_ptr<Level>> m_level;
     std::vector<m_level> m_levels;
-private:
-
 };
