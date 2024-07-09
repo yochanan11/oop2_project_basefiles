@@ -46,6 +46,7 @@ void Player::handleCollision(Player& gameObject) {}
 //------------------
 void Player::handleCollision(FishEaten& gameObject)
 {
+    
     // Determine the type of FishEaten and handle accordingly
     if (dynamic_cast<SmallFish*>(&gameObject)) {
         handleSmallFishCollision(gameObject);
@@ -56,6 +57,8 @@ void Player::handleCollision(FishEaten& gameObject)
     else {
         // Other fish collision handling
     }
+    if (m_score == 16)
+        Resources::instance().playSound(SoundIndex::GROWTH);
 }
 //------------------------------------
 void Player::handleCollision(ObstacleFish& gameObject)
@@ -174,6 +177,7 @@ void Player::isEaten(Fish& fish)
     fish.setIsEaten(true);
     m_score += fish.getScore();
     Resources::instance().playSound(SoundIndex::EAT);
+    
 }
 //-----------------------------------
 void Player::resetEffect(bool& gift)

@@ -65,7 +65,7 @@ void Level1::run() {
                 m_fish.end());
 
             m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(),
-                [](const std::unique_ptr<GameObject>& object) {
+                [](const std::unique_ptr<IsEaten>& object) {
                     return object->getIsEaten();
                 }),
                 m_objects.end());
@@ -76,8 +76,7 @@ void Level1::run() {
                 if (event.type == sf::Event::Closed)
                     m_window->close();
             }
-            if (m_player->getScore() == 16)
-                Resources::instance().playSound(SoundIndex::GROWTH);
+            
         }
         catch (const std::exception&)
         {
@@ -88,6 +87,8 @@ void Level1::run() {
         for (auto& it : m_fish) 
             it->draw(*m_window);
         for (auto& it : m_objects) 
+            it->draw(*m_window);
+        for(auto& it : m_obstacle)
             it->draw(*m_window);
         m_player->draw(*m_window);
         m_window->draw(m_top_rec);
@@ -108,6 +109,11 @@ void Level1::handleCollisions(GameObject& gameObject) {
     for (size_t i = 0; i < m_objects.size(); i++) {
         if (gameObject.checkCollision(*m_objects[i])) {
             gameObject.handleCollision(*m_objects[i]);
+        }
+    }
+    for (size_t i = 0; i < m_obstacle.size(); i++) {
+        if (gameObject.checkCollision(*m_obstacle[i])) {
+            gameObject.handleCollision(*m_obstacle[i]);
         }
     }
     if (gameObject.checkCollision(*m_player)) {
@@ -170,7 +176,7 @@ void Level1::createObstacle() {
     for (size_t i = 0; i < 3; i++) {
         auto obstacle = std::make_unique<Obstacle>();
         obstacle->setPosition((i + 1) * 350.f, WINDOW_HEIGHT - 50.f);
-        m_objects.push_back(std::move(obstacle));
+        m_obstacle.push_back(std::move(obstacle));
     }
 }
 //-------------------------------------

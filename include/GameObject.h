@@ -30,15 +30,15 @@ public:
 	int getDirection() const;
 	bool checkCollision(const GameObject&) const;
 	void setRotation();
-	bool getIsEaten() const;
+	
 	sf::FloatRect getGlobalBounds() const;
 	void setScale(float, float);
-	void setIsEaten(bool);
+	
 
 protected:
 	sf::Sprite getSprite() const;
 	sf::Sprite m_sprite;
-	bool m_eaten = false;//צריך להעביר
+	
 private:
 	int m_direction;	
 };

@@ -12,7 +12,7 @@ sf::Sprite GameObject::getSprite() const { return m_sprite; }
 //------------------------------------------
 void GameObject::setRotation() { m_sprite.scale(-1, 1); }
 //------------------------------------------
-bool GameObject::getIsEaten() const { return m_eaten; }
+
 //------------------------------------------
 bool GameObject::checkCollision(const GameObject& other) const
 {
@@ -29,11 +29,7 @@ void GameObject::setScale(float scaleX, float scaleY)
 {
     m_sprite.setScale(scaleX, scaleY);
 }
-//-----------------------------
-void GameObject::setIsEaten(bool eaten)
-{
-	m_eaten = eaten;
-}
+
 //------------------------------------------
 void GameObject::setPosition(float x, float y) { m_sprite.setPosition(x, y); }
 //------------------------------------------
